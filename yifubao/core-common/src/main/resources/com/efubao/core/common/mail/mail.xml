@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	>
+	<!-- reference: http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/mail.html -->
+	<context:component-scan base-package="com.efubao.t.common.mail" />
+	
+	<bean id="commonJavaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host?10.168.31.43}" />
+		<property name="port" value="${mail.port?25}" />
+		<property name="username" value="${mail.username?v@mail10.efubao.com}" />
+		<property name="password" value="${mail.password?4%lVRrSb0VlMc5Ps2-17}" />
+	</bean>
+
+</beans>

@@ -1,0 +1,52 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans    
+	http://www.springframework.org/schema/beans/spring-beans.xsd     
+	http://www.springframework.org/schema/cache     
+	http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<!-- key Generator -->
+	<bean id="keyGenerator" class="com.efubao.t.common.cache.MyKeyGenerator" />
+	<cache:annotation-driven key-generator="keyGenerator" cache-manager="base_cacheManager"/>
+
+	<import resource="classpath:com/efubao/t/common/cache/base-cache.xml" />
+	
+	<bean id="base_jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${t.redis.ip?10.10.1.5}" />
+		<property name="database" value="${t.redis.db?0}" />
+		<property name="port" value="${t.redis.port?6379}" />
+		<property name="timeout" value="${t.redis.timeout?10000}" />
+		<property name="usePool" value="true" />
+		<property name="poolConfig" ref="base_jedisPoolConfig" />
+	</bean>
+
+	<!-- redis template definition -->
+	<bean id="base_redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="base_jedisConnectionFactory">
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="hashKeySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+	</bean>
+
+	<!-- declare Redis Cache Manager -->
+	<bean id="base_rediscacheManager" class="org.springframework.data.redis.cache.RedisCacheManager"
+		c:template-ref="base_redisTemplate" p:defaultExpiration="${t.redis.defaultExpiration?1800}" />
+
+
+	<!-- dummy cacheManager to control if can not find cache how to do -->
+	<bean id="base_cacheManager" class="org.springframework.cache.support.CompositeCacheManager">
+		<property name="cacheManagers">
+			<list>
+				<ref bean="base_rediscacheManager" />
+			</list>
+		</property>
+		<property name="fallbackToNoOpCache" value="true" />
+	</bean>
+</beans>

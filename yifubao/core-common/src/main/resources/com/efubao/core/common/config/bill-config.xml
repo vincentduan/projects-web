@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+    <context:component-scan base-package="com.bill99.asap.model.strategy" />
+
+    <bean id="billConfig" class="com.efubao.t.common.config.BillConfig">
+        <property name="mdfKeyPath"><value>${app.instance.config}/99bill/client-rsa.pfx</value></property>
+        <property name="publicKeyPath"><value>${app.instance.config}/99bill/99bill-public-rsa.cer</value></property>
+    </bean>
+
+</beans>
