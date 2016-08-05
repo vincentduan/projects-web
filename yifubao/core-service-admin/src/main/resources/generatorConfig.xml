@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="C:/Users/zzy/.m2/repository/mysql/mysql-connector-java/5.1.24/mysql-connector-java-5.1.24.jar" />
+	<context id="efubao_Tables" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="utf-8" />
+		
+		<!-- pagination plugin -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" />
+		<plugin type="org.mybatis.generator.plugin.CommentPlugin" >
+			<property name="modelClassAuthor" value="zhangzhiyong" />
+		</plugin>
+
+		<commentGenerator>
+			<!-- 不生成注解信息 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://10.1.7.18:3306/efubao_goods"
+			userId="root"
+			password="123456" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- generate Model -->
+		<javaModelGenerator targetPackage="com.efubao.core.admin.domain" targetProject="core-service-admin/src/main/java" />
+
+		<!-- generate xml -->
+		<sqlMapGenerator targetPackage="com.efubao.core.admin.mapper" targetProject="core-service-admin/src/main/resources" />
+
+		<!-- generate Mapper -->
+		<javaClientGenerator targetPackage="com.efubao.core.admin.mapper" targetProject="core-service-admin/src/main/java" type="XMLMAPPER" />
+		
+		<table tableName="measure_type" domainObjectName="MeasureType">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="measure_property" domainObjectName="MeasureProperty">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<!-- <table tableName="category" domainObjectName="Category">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="goods" domainObjectName="Goods">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="online_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="offline_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="goods_desc" domainObjectName="GoodsDesc">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="goods_pic" domainObjectName="GoodsPic">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="goods_property" domainObjectName="GoodsProperty">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="goods_property_value" domainObjectName="GoodsPropertyValue">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="goods_sku" domainObjectName="GoodsSKU">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="property" domainObjectName="Property">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="property_value" domainObjectName="PropertyValue">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="sp_goods" domainObjectName="ServiceProviderGoods">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table> -->
+	</context>
+
+</generatorConfiguration>

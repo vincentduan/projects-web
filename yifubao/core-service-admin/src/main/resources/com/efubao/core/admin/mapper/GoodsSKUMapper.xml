@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.admin.mapper.GoodsSKUMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.admin.domain.GoodsSKU" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="attribute_ids" property="attributeIds" jdbcType="VARCHAR" />
+    <result column="attribute_names" property="attributeNames" jdbcType="VARCHAR" />
+    <result column="attribute_value_ids" property="attributeValueIds" jdbcType="VARCHAR" />
+    <result column="attribute_value_names" property="attributeValueNames" jdbcType="VARCHAR" />
+    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, goods_id, attribute_ids, attribute_names, attribute_value_ids, attribute_value_names, 
+    image_path, price, create_time, update_time, is_del
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.admin.domain.GoodsSKUExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods_sku
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods_sku
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_sku
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.admin.domain.GoodsSKUExample" >
+    delete from goods_sku
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.admin.domain.GoodsSKU" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods_sku (goods_id, attribute_ids, attribute_names, 
+      attribute_value_ids, attribute_value_names, 
+      image_path, price, create_time, 
+      update_time, is_del)
+    values (#{goodsId,jdbcType=BIGINT}, #{attributeIds,jdbcType=VARCHAR}, #{attributeNames,jdbcType=VARCHAR}, 
+      #{attributeValueIds,jdbcType=VARCHAR}, #{attributeValueNames,jdbcType=VARCHAR}, 
+      #{imagePath,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.admin.domain.GoodsSKU" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="attributeIds != null" >
+        attribute_ids,
+      </if>
+      <if test="attributeNames != null" >
+        attribute_names,
+      </if>
+      <if test="attributeValueIds != null" >
+        attribute_value_ids,
+      </if>
+      <if test="attributeValueNames != null" >
+        attribute_value_names,
+      </if>
+      <if test="imagePath != null" >
+        image_path,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="attributeIds != null" >
+        #{attributeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNames != null" >
+        #{attributeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueIds != null" >
+        #{attributeValueIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueNames != null" >
+        #{attributeValueNames,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null" >
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.admin.domain.GoodsSKUExample" resultType="java.lang.Integer" >
+    select count(*) from goods_sku
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_sku
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributeIds != null" >
+        attribute_ids = #{record.attributeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeNames != null" >
+        attribute_names = #{record.attributeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeValueIds != null" >
+        attribute_value_ids = #{record.attributeValueIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeValueNames != null" >
+        attribute_value_names = #{record.attributeValueNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagePath != null" >
+        image_path = #{record.imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_sku
+    set ID = #{record.id,jdbcType=BIGINT},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      attribute_ids = #{record.attributeIds,jdbcType=VARCHAR},
+      attribute_names = #{record.attributeNames,jdbcType=VARCHAR},
+      attribute_value_ids = #{record.attributeValueIds,jdbcType=VARCHAR},
+      attribute_value_names = #{record.attributeValueNames,jdbcType=VARCHAR},
+      image_path = #{record.imagePath,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.admin.domain.GoodsSKU" >
+    update goods_sku
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="attributeIds != null" >
+        attribute_ids = #{attributeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNames != null" >
+        attribute_names = #{attributeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueIds != null" >
+        attribute_value_ids = #{attributeValueIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueNames != null" >
+        attribute_value_names = #{attributeValueNames,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null" >
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.admin.domain.GoodsSKU" >
+    update goods_sku
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      attribute_ids = #{attributeIds,jdbcType=VARCHAR},
+      attribute_names = #{attributeNames,jdbcType=VARCHAR},
+      attribute_value_ids = #{attributeValueIds,jdbcType=VARCHAR},
+      attribute_value_names = #{attributeValueNames,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <select id="selectByGoods" resultMap="BaseResultMap">
+     SELECT *
+         FROM goods_sku gs,goods g where gs.goods_id = g.id  
+     <if test="param1 != null" >
+     and g.name like #{param1, jdbcType=VARCHAR} 
+     </if>
+     <if test="param2 != 0" >
+     and g.category_id = #{param2, jdbcType=INTEGER}
+     </if>
+     <if test="param3 >= 0">
+     limit #{param3,jdbcType=INTEGER},#{param4,jdbcType=INTEGER}
+     </if>
+    </select>
+    
+    <select id="selectByGoodsCounts" resultType="java.lang.Integer">
+     SELECT count(1)
+     FROM goods_sku gs,goods g where gs.goods_id = g.id  
+     <if test="param1 != null" >
+     and g.name like #{param1, jdbcType=VARCHAR} 
+     </if>
+     <if test="param2 != 0" >
+     and g.category_id = #{param2, jdbcType=INTEGER}
+     </if>
+    </select>
+  
+</mapper>
