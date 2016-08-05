@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+	default-lazy-init="true">
+     
+     	<!-- scan for mappers and let them be autowired -->
+	<bean id="core_public_Scan" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.efubao.core.pb.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="core_public_SessionFactory" />
+	</bean>
+
+
+	<!-- define the SqlSessionFactory -->
+	<bean id="core_public_SessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="public_DataSource" />
+		<property name="typeAliasesPackage" value="com.efubao.core.pb.domain" />
+	</bean>
+
+</beans>
