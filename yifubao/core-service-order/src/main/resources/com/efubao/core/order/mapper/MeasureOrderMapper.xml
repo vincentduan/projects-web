@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.order.mapper.MeasureOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.order.domain.MeasureOrder" >
+    <id column="measure_order_no" property="measureOrderNo" jdbcType="VARCHAR" />
+    <result column="measure_master_id" property="measureMasterId" jdbcType="BIGINT" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="measure_num" property="measureNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    measure_order_no, measure_master_id, order_no, source, status, remarks, create_time, 
+    update_time, is_del, measure_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.order.domain.MeasureOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from measure_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from measure_order
+    where measure_order_no = #{measureOrderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from measure_order
+    where measure_order_no = #{measureOrderNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.order.domain.MeasureOrderExample" >
+    delete from measure_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.order.domain.MeasureOrder" >
+    insert into measure_order (measure_order_no, measure_master_id, order_no, 
+      source, status, remarks, 
+      create_time, update_time, is_del, 
+      measure_num)
+    values (#{measureOrderNo,jdbcType=VARCHAR}, #{measureMasterId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, 
+      #{source,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}, 
+      #{measureNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.order.domain.MeasureOrder" >
+    insert into measure_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="measureOrderNo != null" >
+        measure_order_no,
+      </if>
+      <if test="measureMasterId != null" >
+        measure_master_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="measureNum != null" >
+        measure_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="measureOrderNo != null" >
+        #{measureOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="measureMasterId != null" >
+        #{measureMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="measureNum != null" >
+        #{measureNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.order.domain.MeasureOrderExample" resultType="java.lang.Integer" >
+    select count(*) from measure_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="sumMeasureNum" resultType="java.lang.Long">
+		select sum(measure_num) from measure_order
+	</select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update measure_order
+    <set >
+      <if test="record.measureOrderNo != null" >
+        measure_order_no = #{record.measureOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.measureMasterId != null" >
+        measure_master_id = #{record.measureMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+      <if test="record.measureNum != null" >
+        measure_num = #{record.measureNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update measure_order
+    set measure_order_no = #{record.measureOrderNo,jdbcType=VARCHAR},
+      measure_master_id = #{record.measureMasterId,jdbcType=BIGINT},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT},
+      measure_num = #{record.measureNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.order.domain.MeasureOrder" >
+    update measure_order
+    <set >
+      <if test="measureMasterId != null" >
+        measure_master_id = #{measureMasterId,jdbcType=BIGINT},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="measureNum != null" >
+        measure_num = #{measureNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where measure_order_no = #{measureOrderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.order.domain.MeasureOrder" >
+    update measure_order
+    set measure_master_id = #{measureMasterId,jdbcType=BIGINT},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      source = #{source,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT},
+      measure_num = #{measureNum,jdbcType=INTEGER}
+    where measure_order_no = #{measureOrderNo,jdbcType=VARCHAR}
+  </update>
+  <!-- Custom -->
+  <select id="sumMeasureNumByConditon" parameterType="com.efubao.core.order.domain.MeasureOrder" resultType="java.lang.Integer">
+    select sum(measure_num) from measure_order where 
+    <if test="measureMasterId != null" >
+    	measure_master_id = #{measureMasterId,jdbcType=BIGINT}
+    </if>
+    <if test="status != null" >
+        <if test="measureMasterId != null" >
+        	and
+        </if>
+    	status = #{status,jdbcType=INTEGER}
+    </if> 
+    <if test="measureMasterId != null" >
+        <if test="measureMasterId != null || status != null" >
+        	and
+        </if>
+    	is_del = #{isDel,jdbcType=BIT}
+    </if> 
+  </select>
+</mapper>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.order.mapper.OrderPaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.order.domain.OrderPayment" >
+    <id column="order_payment_no" property="orderPaymentNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="thrid_payment_num" property="thridPaymentNum" jdbcType="BIGINT" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="pay_status" property="payStatus" jdbcType="VARCHAR" />
+    <result column="pay_money" property="payMoney" jdbcType="DECIMAL" />
+    <result column="pay_way" property="payWay" jdbcType="INTEGER" />
+    <result column="pay_finish_time" property="payFinishTime" jdbcType="TIMESTAMP" />
+    <result column="refund_finish_time" property="refundFinishTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_payment_no, order_no, thrid_payment_num, pay_type, pay_status, pay_money, pay_way, 
+    pay_finish_time, refund_finish_time, create_time, update_time, is_del, remarks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.order.domain.OrderPaymentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_payment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_payment
+    where order_payment_no = #{orderPaymentNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_payment
+    where order_payment_no = #{orderPaymentNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.order.domain.OrderPaymentExample" >
+    delete from order_payment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.order.domain.OrderPayment" >
+    insert into order_payment (order_payment_no, order_no, thrid_payment_num, 
+      pay_type, pay_status, pay_money, 
+      pay_way, pay_finish_time, refund_finish_time, 
+      create_time, update_time, is_del, 
+      remarks)
+    values (#{orderPaymentNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{thridPaymentNum,jdbcType=BIGINT}, 
+      #{payType,jdbcType=INTEGER}, #{payStatus,jdbcType=VARCHAR}, #{payMoney,jdbcType=DECIMAL}, 
+      #{payWay,jdbcType=INTEGER}, #{payFinishTime,jdbcType=TIMESTAMP}, #{refundFinishTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.order.domain.OrderPayment" >
+    insert into order_payment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderPaymentNo != null" >
+        order_payment_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="thridPaymentNum != null" >
+        thrid_payment_num,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payStatus != null" >
+        pay_status,
+      </if>
+      <if test="payMoney != null" >
+        pay_money,
+      </if>
+      <if test="payWay != null" >
+        pay_way,
+      </if>
+      <if test="payFinishTime != null" >
+        pay_finish_time,
+      </if>
+      <if test="refundFinishTime != null" >
+        refund_finish_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderPaymentNo != null" >
+        #{orderPaymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="thridPaymentNum != null" >
+        #{thridPaymentNum,jdbcType=BIGINT},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payWay != null" >
+        #{payWay,jdbcType=INTEGER},
+      </if>
+      <if test="payFinishTime != null" >
+        #{payFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundFinishTime != null" >
+        #{refundFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.order.domain.OrderPaymentExample" resultType="java.lang.Integer" >
+    select count(*) from order_payment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_payment
+    <set >
+      <if test="record.orderPaymentNo != null" >
+        order_payment_no = #{record.orderPaymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thridPaymentNum != null" >
+        thrid_payment_num = #{record.thridPaymentNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.payStatus != null" >
+        pay_status = #{record.payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payMoney != null" >
+        pay_money = #{record.payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payWay != null" >
+        pay_way = #{record.payWay,jdbcType=INTEGER},
+      </if>
+      <if test="record.payFinishTime != null" >
+        pay_finish_time = #{record.payFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundFinishTime != null" >
+        refund_finish_time = #{record.refundFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_payment
+    set order_payment_no = #{record.orderPaymentNo,jdbcType=VARCHAR},
+      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      thrid_payment_num = #{record.thridPaymentNum,jdbcType=BIGINT},
+      pay_type = #{record.payType,jdbcType=INTEGER},
+      pay_status = #{record.payStatus,jdbcType=VARCHAR},
+      pay_money = #{record.payMoney,jdbcType=DECIMAL},
+      pay_way = #{record.payWay,jdbcType=INTEGER},
+      pay_finish_time = #{record.payFinishTime,jdbcType=TIMESTAMP},
+      refund_finish_time = #{record.refundFinishTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.order.domain.OrderPayment" >
+    update order_payment
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="thridPaymentNum != null" >
+        thrid_payment_num = #{thridPaymentNum,jdbcType=BIGINT},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payStatus != null" >
+        pay_status = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payMoney != null" >
+        pay_money = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=INTEGER},
+      </if>
+      <if test="payFinishTime != null" >
+        pay_finish_time = #{payFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundFinishTime != null" >
+        refund_finish_time = #{refundFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_payment_no = #{orderPaymentNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.order.domain.OrderPayment" >
+    update order_payment
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      thrid_payment_num = #{thridPaymentNum,jdbcType=BIGINT},
+      pay_type = #{payType,jdbcType=INTEGER},
+      pay_status = #{payStatus,jdbcType=VARCHAR},
+      pay_money = #{payMoney,jdbcType=DECIMAL},
+      pay_way = #{payWay,jdbcType=INTEGER},
+      pay_finish_time = #{payFinishTime,jdbcType=TIMESTAMP},
+      refund_finish_time = #{refundFinishTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where order_payment_no = #{orderPaymentNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

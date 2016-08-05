@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.order.mapper.BaseOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.order.domain.BaseOrder" >
+    <id column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="sp_id" property="spId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="order_contract_id" property="orderContractId" jdbcType="BIGINT" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="quality_deposit" property="qualityDeposit" jdbcType="DECIMAL" />
+    <result column="credit_deposit" property="creditDeposit" jdbcType="DECIMAL" />
+    <result column="front_money" property="frontMoney" jdbcType="DECIMAL" />
+    <result column="balance_payment" property="balancePayment" jdbcType="DECIMAL" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_no, status, type, sp_id, customer_id, order_contract_id, total_money, quality_deposit, 
+    credit_deposit, front_money, balance_payment, remarks, create_time, update_time, 
+    is_del
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.order.domain.BaseOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_order
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from base_order
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.order.domain.BaseOrderExample" >
+    delete from base_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.order.domain.BaseOrder" >
+    insert into base_order (order_no, status, type, 
+      sp_id, customer_id, order_contract_id, 
+      total_money, quality_deposit, credit_deposit, 
+      front_money, balance_payment, remarks, 
+      create_time, update_time, is_del
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
+      #{spId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, #{orderContractId,jdbcType=BIGINT}, 
+      #{totalMoney,jdbcType=DECIMAL}, #{qualityDeposit,jdbcType=DECIMAL}, #{creditDeposit,jdbcType=DECIMAL}, 
+      #{frontMoney,jdbcType=DECIMAL}, #{balancePayment,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.order.domain.BaseOrder" >
+    insert into base_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="orderContractId != null" >
+        order_contract_id,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="qualityDeposit != null" >
+        quality_deposit,
+      </if>
+      <if test="creditDeposit != null" >
+        credit_deposit,
+      </if>
+      <if test="frontMoney != null" >
+        front_money,
+      </if>
+      <if test="balancePayment != null" >
+        balance_payment,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="spId != null" >
+        #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="orderContractId != null" >
+        #{orderContractId,jdbcType=BIGINT},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="qualityDeposit != null" >
+        #{qualityDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditDeposit != null" >
+        #{creditDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="frontMoney != null" >
+        #{frontMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="balancePayment != null" >
+        #{balancePayment,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.order.domain.BaseOrderExample" resultType="java.lang.Integer" >
+    select count(*) from base_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update base_order
+    <set >
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.spId != null" >
+        sp_id = #{record.spId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerId != null" >
+        customer_id = #{record.customerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderContractId != null" >
+        order_contract_id = #{record.orderContractId,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalMoney != null" >
+        total_money = #{record.totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qualityDeposit != null" >
+        quality_deposit = #{record.qualityDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.creditDeposit != null" >
+        credit_deposit = #{record.creditDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.frontMoney != null" >
+        front_money = #{record.frontMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.balancePayment != null" >
+        balance_payment = #{record.balancePayment,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update base_order
+    set order_no = #{record.orderNo,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      sp_id = #{record.spId,jdbcType=BIGINT},
+      customer_id = #{record.customerId,jdbcType=BIGINT},
+      order_contract_id = #{record.orderContractId,jdbcType=BIGINT},
+      total_money = #{record.totalMoney,jdbcType=DECIMAL},
+      quality_deposit = #{record.qualityDeposit,jdbcType=DECIMAL},
+      credit_deposit = #{record.creditDeposit,jdbcType=DECIMAL},
+      front_money = #{record.frontMoney,jdbcType=DECIMAL},
+      balance_payment = #{record.balancePayment,jdbcType=DECIMAL},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.order.domain.BaseOrder" >
+    update base_order
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="spId != null" >
+        sp_id = #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="orderContractId != null" >
+        order_contract_id = #{orderContractId,jdbcType=BIGINT},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="qualityDeposit != null" >
+        quality_deposit = #{qualityDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="creditDeposit != null" >
+        credit_deposit = #{creditDeposit,jdbcType=DECIMAL},
+      </if>
+      <if test="frontMoney != null" >
+        front_money = #{frontMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="balancePayment != null" >
+        balance_payment = #{balancePayment,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+    </set>
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.order.domain.BaseOrder" >
+    update base_order
+    set status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      sp_id = #{spId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      order_contract_id = #{orderContractId,jdbcType=BIGINT},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      quality_deposit = #{qualityDeposit,jdbcType=DECIMAL},
+      credit_deposit = #{creditDeposit,jdbcType=DECIMAL},
+      front_money = #{frontMoney,jdbcType=DECIMAL},
+      balance_payment = #{balancePayment,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT}
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

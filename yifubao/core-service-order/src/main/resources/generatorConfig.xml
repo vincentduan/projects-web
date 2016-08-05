@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="C:/Users/zzy/.m2/repository/mysql/mysql-connector-java/5.1.24/mysql-connector-java-5.1.24.jar" />
+	<context id="efubao_Tables" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="utf-8" />
+		
+		<!-- pagination plugin -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" />
+		<plugin type="org.mybatis.generator.plugin.CommentPlugin" >
+			<property name="modelClassAuthor" value="zhangzhiyong" />
+		</plugin>
+
+		<commentGenerator>
+			<!-- 不生成注解信息 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://10.1.7.18:3306/efubao_order"
+			userId="root"
+			password="123456" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- generate Model -->
+		<javaModelGenerator targetPackage="com.efubao.core.order.domain" targetProject="core-service-order/src/main/java" />
+
+		<!-- generate xml -->
+		<sqlMapGenerator targetPackage="com.efubao.core.order.mapper" targetProject="core-service-order/src/main/resources" />
+
+		<!-- generate Mapper -->
+		<javaClientGenerator targetPackage="com.efubao.core.order.mapper" targetProject="core-service-order/src/main/java" type="XMLMAPPER" />
+		
+		<table tableName="order_measure_address" domainObjectName="OrderMeasureAddress">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="receive_address" domainObjectName="ReceiveAddress">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		<table tableName="order_customer_info" domainObjectName="OrderCustomerInfo">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+	</context>
+
+</generatorConfiguration>

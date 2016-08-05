@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.order.mapper.OrderCustomGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.order.domain.OrderCustomGoods" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_sku_id" property="goodsSkuId" jdbcType="BIGINT" />
+    <result column="order_custom_demand_id" property="orderCustomDemandId" jdbcType="BIGINT" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+    <result column="attribute_ids" property="attributeIds" jdbcType="VARCHAR" />
+    <result column="attribute_names" property="attributeNames" jdbcType="VARCHAR" />
+    <result column="attribute_value_ids" property="attributeValueIds" jdbcType="VARCHAR" />
+    <result column="attribute_value_names" property="attributeValueNames" jdbcType="VARCHAR" />
+    <result column="first_image_path" property="firstImagePath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, goods_num, goods_name, goods_sku_id, order_custom_demand_id, goods_price, create_time, 
+    update_time, is_del, attribute_ids, attribute_names, attribute_value_ids, attribute_value_names, 
+    first_image_path
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.order.domain.OrderCustomGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from order_custom_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_custom_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_custom_goods
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.order.domain.OrderCustomGoodsExample" >
+    delete from order_custom_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.order.domain.OrderCustomGoods" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_custom_goods (goods_num, goods_name, goods_sku_id, 
+      order_custom_demand_id, goods_price, create_time, 
+      update_time, is_del, attribute_ids, 
+      attribute_names, attribute_value_ids, attribute_value_names, 
+      first_image_path)
+    values (#{goodsNum,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsSkuId,jdbcType=BIGINT}, 
+      #{orderCustomDemandId,jdbcType=BIGINT}, #{goodsPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}, #{attributeIds,jdbcType=VARCHAR}, 
+      #{attributeNames,jdbcType=VARCHAR}, #{attributeValueIds,jdbcType=VARCHAR}, #{attributeValueNames,jdbcType=VARCHAR}, 
+      #{firstImagePath,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.order.domain.OrderCustomGoods" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into order_custom_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsSkuId != null" >
+        goods_sku_id,
+      </if>
+      <if test="orderCustomDemandId != null" >
+        order_custom_demand_id,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="attributeIds != null" >
+        attribute_ids,
+      </if>
+      <if test="attributeNames != null" >
+        attribute_names,
+      </if>
+      <if test="attributeValueIds != null" >
+        attribute_value_ids,
+      </if>
+      <if test="attributeValueNames != null" >
+        attribute_value_names,
+      </if>
+      <if test="firstImagePath != null" >
+        first_image_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSkuId != null" >
+        #{goodsSkuId,jdbcType=BIGINT},
+      </if>
+      <if test="orderCustomDemandId != null" >
+        #{orderCustomDemandId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="attributeIds != null" >
+        #{attributeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNames != null" >
+        #{attributeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueIds != null" >
+        #{attributeValueIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueNames != null" >
+        #{attributeValueNames,jdbcType=VARCHAR},
+      </if>
+      <if test="firstImagePath != null" >
+        #{firstImagePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.order.domain.OrderCustomGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from order_custom_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update order_custom_goods
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsNum != null" >
+        goods_num = #{record.goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsSkuId != null" >
+        goods_sku_id = #{record.goodsSkuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderCustomDemandId != null" >
+        order_custom_demand_id = #{record.orderCustomDemandId,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+      <if test="record.attributeIds != null" >
+        attribute_ids = #{record.attributeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeNames != null" >
+        attribute_names = #{record.attributeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeValueIds != null" >
+        attribute_value_ids = #{record.attributeValueIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attributeValueNames != null" >
+        attribute_value_names = #{record.attributeValueNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstImagePath != null" >
+        first_image_path = #{record.firstImagePath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update order_custom_goods
+    set ID = #{record.id,jdbcType=BIGINT},
+      goods_num = #{record.goodsNum,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_sku_id = #{record.goodsSkuId,jdbcType=BIGINT},
+      order_custom_demand_id = #{record.orderCustomDemandId,jdbcType=BIGINT},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT},
+      attribute_ids = #{record.attributeIds,jdbcType=VARCHAR},
+      attribute_names = #{record.attributeNames,jdbcType=VARCHAR},
+      attribute_value_ids = #{record.attributeValueIds,jdbcType=VARCHAR},
+      attribute_value_names = #{record.attributeValueNames,jdbcType=VARCHAR},
+      first_image_path = #{record.firstImagePath,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.order.domain.OrderCustomGoods" >
+    update order_custom_goods
+    <set >
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSkuId != null" >
+        goods_sku_id = #{goodsSkuId,jdbcType=BIGINT},
+      </if>
+      <if test="orderCustomDemandId != null" >
+        order_custom_demand_id = #{orderCustomDemandId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="attributeIds != null" >
+        attribute_ids = #{attributeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeNames != null" >
+        attribute_names = #{attributeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueIds != null" >
+        attribute_value_ids = #{attributeValueIds,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeValueNames != null" >
+        attribute_value_names = #{attributeValueNames,jdbcType=VARCHAR},
+      </if>
+      <if test="firstImagePath != null" >
+        first_image_path = #{firstImagePath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.order.domain.OrderCustomGoods" >
+    update order_custom_goods
+    set goods_num = #{goodsNum,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_sku_id = #{goodsSkuId,jdbcType=BIGINT},
+      order_custom_demand_id = #{orderCustomDemandId,jdbcType=BIGINT},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT},
+      attribute_ids = #{attributeIds,jdbcType=VARCHAR},
+      attribute_names = #{attributeNames,jdbcType=VARCHAR},
+      attribute_value_ids = #{attributeValueIds,jdbcType=VARCHAR},
+      attribute_value_names = #{attributeValueNames,jdbcType=VARCHAR},
+      first_image_path = #{firstImagePath,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

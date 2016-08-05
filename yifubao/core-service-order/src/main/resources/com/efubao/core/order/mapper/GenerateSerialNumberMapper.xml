@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.order.mapper.GenerateSerialNumberMapper" >
+
+   <parameterMap type="java.util.Map" id="parameterMap">
+         <parameter property="type" mode="IN" jdbcType="INTEGER"/>
+         <parameter property="orderNo" mode="OUT" jdbcType="VARCHAR"/>
+    </parameterMap>
+    
+    <select id="getSerialNumber" statementType="CALLABLE" parameterMap="parameterMap">
+       <![CDATA[
+           {call generate_serialNumber(?,?)}    
+       ]]>
+    </select>
+    
+</mapper>
