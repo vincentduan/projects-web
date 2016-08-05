@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unisk.is.mapper.NoticeMessageReceiverMapper" >
+  <resultMap id="BaseResultMap" type="com.unisk.zc.entitys.NoticeMessageReceiver" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="MESSAGEID" property="messageid" jdbcType="INTEGER" />
+    <result column="RECEIVERUSERNAME" property="receiverusername" jdbcType="VARCHAR" />
+    <result column="ISSEND" property="issend" jdbcType="INTEGER" />
+    <result column="SENDTIME" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="ISREAD" property="isread" jdbcType="INTEGER" />
+    <result column="READTIME" property="readtime" jdbcType="TIMESTAMP" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="DELMARK" property="delmark" jdbcType="INTEGER" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CREATEUSERID" property="createuserid" jdbcType="INTEGER" />
+    <result column="MODIFYTIME" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="MODIFYUSERID" property="modifyuserid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, MESSAGEID, RECEIVERUSERNAME, ISSEND, SENDTIME, ISREAD, READTIME, REMARKS, DELMARK, 
+    CREATETIME, CREATEUSERID, MODIFYTIME, MODIFYUSERID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_d_message_receiver
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_d_message_receiver
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.unisk.zc.entitys.NoticeMessageReceiver" keyProperty="id" useGeneratedKeys="true">
+    insert into tb_d_message_receiver (ID, MESSAGEID, RECEIVERUSERNAME, 
+      ISSEND, SENDTIME, ISREAD, 
+      READTIME, REMARKS, DELMARK, 
+      CREATETIME, CREATEUSERID, MODIFYTIME, 
+      MODIFYUSERID)
+    values (#{id,jdbcType=BIGINT}, #{messageid,jdbcType=INTEGER}, #{receiverusername,jdbcType=VARCHAR}, 
+      #{issend,jdbcType=INTEGER}, #{sendtime,jdbcType=TIMESTAMP}, #{isread,jdbcType=INTEGER}, 
+      #{readtime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delmark,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createuserid,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{modifyuserid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unisk.zc.entitys.NoticeMessageReceiver" keyProperty="id" useGeneratedKeys="true">
+    insert into tb_d_message_receiver
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="messageid != null" >
+        MESSAGEID,
+      </if>
+      <if test="receiverusername != null" >
+        RECEIVERUSERNAME,
+      </if>
+      <if test="issend != null" >
+        ISSEND,
+      </if>
+      <if test="sendtime != null" >
+        SENDTIME,
+      </if>
+      <if test="isread != null" >
+        ISREAD,
+      </if>
+      <if test="readtime != null" >
+        READTIME,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="delmark != null" >
+        DELMARK,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="createuserid != null" >
+        CREATEUSERID,
+      </if>
+      <if test="modifytime != null" >
+        MODIFYTIME,
+      </if>
+      <if test="modifyuserid != null" >
+        MODIFYUSERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="messageid != null" >
+        #{messageid,jdbcType=INTEGER},
+      </if>
+      <if test="receiverusername != null" >
+        #{receiverusername,jdbcType=VARCHAR},
+      </if>
+      <if test="issend != null" >
+        #{issend,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isread != null" >
+        #{isread,jdbcType=INTEGER},
+      </if>
+      <if test="readtime != null" >
+        #{readtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delmark != null" >
+        #{delmark,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null" >
+        #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuserid != null" >
+        #{modifyuserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unisk.zc.entitys.NoticeMessageReceiver" >
+    update tb_d_message_receiver
+    <set >
+      <if test="messageid != null" >
+        MESSAGEID = #{messageid,jdbcType=INTEGER},
+      </if>
+      <if test="receiverusername != null" >
+        RECEIVERUSERNAME = #{receiverusername,jdbcType=VARCHAR},
+      </if>
+      <if test="issend != null" >
+        ISSEND = #{issend,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isread != null" >
+        ISREAD = #{isread,jdbcType=INTEGER},
+      </if>
+      <if test="readtime != null" >
+        READTIME = #{readtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delmark != null" >
+        DELMARK = #{delmark,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null" >
+        CREATEUSERID = #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null" >
+        MODIFYTIME = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuserid != null" >
+        MODIFYUSERID = #{modifyuserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unisk.zc.entitys.NoticeMessageReceiver" >
+    update tb_d_message_receiver
+    set MESSAGEID = #{messageid,jdbcType=INTEGER},
+      RECEIVERUSERNAME = #{receiverusername,jdbcType=VARCHAR},
+      ISSEND = #{issend,jdbcType=INTEGER},
+      SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      ISREAD = #{isread,jdbcType=INTEGER},
+      READTIME = #{readtime,jdbcType=TIMESTAMP},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      DELMARK = #{delmark,jdbcType=INTEGER},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{createuserid,jdbcType=INTEGER},
+      MODIFYTIME = #{modifytime,jdbcType=TIMESTAMP},
+      MODIFYUSERID = #{modifyuserid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

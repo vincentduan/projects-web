@@ -1,0 +1,169 @@
+﻿CSS Document */
+
+/*公共部分*/
+a{text-decoration:none; color:#808080;}
+a:hover{text-decoration:none;; color:#178CDC;}
+img{border:medium none;}
+﻿ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0 auto;padding:0;}
+li{list-style:none;overflow:hidden;}
+body{font-family: "Lantinghei SC","Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;font-size:12px; color:#000;padding:0px; margin:0px auto; color:#666; background:#ECECEC none repeat scroll 0% 0%; }
+.left{float:left;}
+.right{ float:right;}
+.both{clear:both}
+.hr5{ height:5px; overflow:hidden; line-height:1px; clear:both;}
+.hr10{ height:10px; overflow:hidden; line-height:1px; clear:both;}
+.font12{ font-size:12px;}
+.font14{ font-size:14px;}
+.font16{ font-size:16px;}
+
+/*body部分*/
+.head{font-family: "Lantinghei SC","Open Sans",Arial,"Hiragino Sans GB","Microsoft YaHei","微软雅黑","STHeiti","WenQuanYi Micro Hei",SimSun,sans-serif;
+position: fixed;
+top: 0px;
+left: 0px;
+width: 100%;
+background: #FFF none repeat scroll 0% 0%;
+height: 62px;
+z-index: 999;
+box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+box-sizing: content-box;}
+.container{
+max-width: 1170px;
+margin: 0px auto;
+position: relative;
+}
+.container .logo{width: 61.5px;
+height: 34.5px;
+position: absolute;
+top: 15px;
+left: 0px;}
+.logo img {
+    width: 100%; max-width:100%;
+}
+.head .nav{padding-left: 102px; float:left;}
+.head .nav ul{ list-style:outside none none;}
+.head .nav ul li{float: left;position: relative;}
+.head .nav ul li a{
+padding: 0px 15px;
+margin: 0px 5px;
+line-height: 62px;
+height: 62px;
+overflow: hidden;
+box-sizing: border-box;
+color:#333;
+font-size:15px; font-family:"Microsoft YaHei"}
+.head_1 .nav ul li a:hover{color:#178FE6; text-decoration:none;}
+.head_1 .nav ul li.active a {
+    border-bottom: 2px solid #178FE6;
+    color: #000;
+    font-weight: 600;
+	}
+.navsub{float: right;
+height: 62px;
+margin-right: 20px;}
+.navsub ul li{float: left;
+position: relative;
+height: 62px;}
+.navsub ul li a{padding: 0px 15px;display: block;  color: #000; font-size:15px; }
+.navsub ul li a:hover{color:#178FE6; text-decoration:none;}
+.navsub ul li a img{display: block;
+width: 30px;
+height: 30px;
+border-radius: 30px;}
+
+/*container部分*/
+.container{ width:1200px; margin:0 auto; padding:0px 15px;}
+.cat-part01{ width:100%; height:350px;border: 1px solid #E3E3E3;}
+.syndicates-left{ position:relative; width:840px; height:100%; float:left;border-right: 1px solid #EFEFEF; background:url(5e96009e40e1d2b2d6125ebc897a4c2d.jpg) no-repeat;
+background-size: cover;}
+.syndicates-status{background-color: #178FE6; position:absolute; width:118px;height: 40px; left:0px; line-height:40px; text-align:center; margin:0 15px; color:#fff; font-size:14px;}
+.syndicates-right{ float:left; width:328px; height:100%;}
+.investor-led-title{position: relative;
+height: 60px;
+line-height: 60px;
+background-color: #F9F9F9;
+border-bottom: 1px solid #F2F2F2; font-size:14px;}
+
+.led-logo{ display: inline-block; ;width: 30px;height: 30px;border-radius:50%;background: url(59296f091636d4b31bb3817a80221c74.jpg) no-repeat center center;background-size: cover;vertical-align: middle;margin: 0px 15px 0px 25px;box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);}
+.led-name{
+margin-left: 15px;
+overflow: hidden;
+max-width: 200px;
+text-overflow: ellipsis;
+display: inline-block;
+height: 30px;
+line-height: 30px;
+vertical-align: middle;
+white-space: nowrap;
+margin-right:10px;}
+.investor-detail{height: 268px;
+padding: 20px 25px 0px;
+background-color: #FFF;}
+.investor-detail{font-size: 13px;
+line-height: 1.42857;
+color: #32353D;}
+.syndicates-logo{ background:url(5a3fc2e99e098854.png) no-repeat;
+display: inline-block;
+width: 60px;
+height: 60px;
+float: left;
+margin-right: 15px;
+border-radius: 5px;
+background-repeat: no-repeat;
+background-size: 100% 100%;
+box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);}
+.c-black{font-size:15px;color: #000;}
+.brief{color: #999;margin-top: 5px;}
+.syndicates-detail{display: inline-block;
+width: 100%;
+margin-top: 20px;}
+.syndicates-attr{float: left;
+color: #AAA;}
+.syndicates-detail .mb-5{margin-bottom: 5px;}
+.syndicates-intro {float: right;
+text-align: right;}
+.loading-shade{position: relative;
+width: 100%;
+height: 6px;
+background-color: #EEE;
+border-radius: 2px;}
+.loading-bar{position: absolute;
+width: 0px;
+height: 100%;
+left: 0px;
+top: 0px;
+border-radius: 2px;
+background-color: #37C393;
+transition: all 2s ease 0s;}
+.goal{color: #AAA;
+margin: 8px 0px 25px;}
+.goal-text{ display:inline-block; text-align:left; color:#AAA;}
+.goal-umb{display:inline-block; text-align:right; color: #F90;font-size: 15px; font-weight:bold; float:right;}
+.view-detail{display: inline-block;
+width: 100%;
+height: 34px;
+line-height: 34px;
+text-align: center;
+color: #666;
+background-color: #FCFCFC;
+border: 1px solid #DDD;
+cursor: pointer;
+border-radius: 2px;}
+.syndicates-bg{
+ background:url(824d1fb08ebff6a4992e0cd65129a581.jpg) no-repeat;
+}
+.syndicates-status-01{ 
+background-color:#F28D00;
+    position: absolute;
+    width: auto;
+    min-width: 118px;
+    height: 40px;
+    left: 0px;
+    top: 0px;
+    padding: 0px 30px;
+    color: #FFF;
+    text-align: center;
+    line-height: 40px;
+	margin-left:15px;
+}
+

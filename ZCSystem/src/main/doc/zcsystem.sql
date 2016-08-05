@@ -1,0 +1,589 @@
+/*
+SQLyog Ultimate v11.24 (32 bit)
+MySQL - 5.6.23-log : Database - zhongchou
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`zhongchou` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+
+USE `zhongchou`;
+
+/*Table structure for table `tb_d_agree_and_against_log` */
+
+DROP TABLE IF EXISTS `tb_d_agree_and_against_log`;
+
+CREATE TABLE `tb_d_agree_and_against_log` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PROJECTID` int(11) DEFAULT NULL,
+  `USERID` int(11) DEFAULT NULL,
+  `OPRERATION` int(4) DEFAULT NULL COMMENT '操作，赞成：0，反对：1',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='赞成反对记录表';
+
+/*Data for the table `tb_d_agree_and_against_log` */
+
+/*Table structure for table `tb_d_button` */
+
+DROP TABLE IF EXISTS `tb_d_button`;
+
+CREATE TABLE `tb_d_button` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `BUTTONNAME` varchar(50) DEFAULT NULL COMMENT '按钮名称',
+  `BUTTONNO` varchar(50) DEFAULT NULL COMMENT '按钮编码',
+  `BUTTONCLASS` varchar(50) DEFAULT NULL COMMENT '按钮类，主管样式',
+  `MENUID` int(11) DEFAULT NULL COMMENT '菜单ID\n            菜单和页面按钮是严格的一对多的关系',
+  `SORTCODE` int(4) DEFAULT NULL COMMENT '排序码,升序排列',
+  `ALLOWDEL` int(4) DEFAULT '0' COMMENT '允许删除，0：不允许，1：允许',
+  `ALLOWEDIT` int(4) DEFAULT '0' COMMENT '允许编辑，0：不允许，1:允许',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面按钮，资源的一种';
+
+/*Data for the table `tb_d_button` */
+
+/*Table structure for table `tb_d_department` */
+
+DROP TABLE IF EXISTS `tb_d_department`;
+
+CREATE TABLE `tb_d_department` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DEPTNAME` varchar(50) DEFAULT NULL COMMENT '部门名称',
+  `DEPTNO` varchar(50) DEFAULT NULL COMMENT '部门编号',
+  `PARENTID` int(11) DEFAULT NULL COMMENT '父部门ID',
+  `SORTCODE` int(4) DEFAULT NULL COMMENT '排序码，升序排列',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  `WECHATSTATUS` tinyint(4) DEFAULT NULL COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='公司组织结构表\n公司组织结构和用户是严格的一对多的关系，是用户权限来源的组成部分';
+
+/*Data for the table `tb_d_department` */
+
+insert  into `tb_d_department`(`ID`,`DEPTNAME`,`DEPTNO`,`PARENTID`,`SORTCODE`,`REMARKS`,`DELMARK`,`CREATETIME`,`CREATEUSERID`,`MODIFYTIME`,`MODIFYUSERID`,`WECHATSTATUS`) values (1,'中国联通集团','NO.1',0,1,'中国联通集团',0,'2016-01-12 14:00:12',NULL,'2016-01-08 16:20:11',NULL,2),(4,'集成公司','NO1.3',1,3,'测试微信接口添加',0,'2016-01-12 14:00:12',NULL,'2016-01-12 08:59:51',NULL,2),(5,'联通时科(北京)','',1,2,'',0,'2016-01-12 14:00:15',NULL,'2016-01-12 09:42:18',NULL,2);
+
+/*Table structure for table `tb_d_dictionary` */
+
+DROP TABLE IF EXISTS `tb_d_dictionary`;
+
+CREATE TABLE `tb_d_dictionary` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `KINDS` varchar(100) DEFAULT NULL COMMENT '类型',
+  `UKEY` varchar(500) DEFAULT NULL COMMENT '建',
+  `UVALUE` varchar(2000) DEFAULT NULL COMMENT '值',
+  `UMAXVALUE` varchar(2000) DEFAULT NULL COMMENT '最大值',
+  `UMINVALUE` varchar(2000) DEFAULT NULL COMMENT '最小值',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COMMENT='字典表';
+
+/*Data for the table `tb_d_dictionary` */
+
+insert  into `tb_d_dictionary`(`ID`,`KINDS`,`UKEY`,`UVALUE`,`UMAXVALUE`,`UMINVALUE`,`REMARKS`,`DELMARK`,`CREATETIME`,`CREATEUSERID`,`MODIFYTIME`,`MODIFYUSERID`) values (15,'COMMON-REGION','集团','0',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(16,'COMMON-REGION','北京','1',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(17,'COMMON-REGION','天津','2',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(18,'COMMON-REGION','上海','3',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(19,'COMMON-REGION','重庆','4',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(20,'COMMON-REGION','河北','5',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(21,'COMMON-REGION','山西','6',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(22,'COMMON-REGION','辽宁','7',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(23,'COMMON-REGION','吉林','8',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(24,'COMMON-REGION','黑龙江','9',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(25,'COMMON-REGION','江苏','10',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(26,'COMMON-REGION','浙江','11',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(27,'COMMON-REGION','安徽','12',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(28,'COMMON-REGION','福建','13',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(29,'COMMON-REGION','台湾','14',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(30,'COMMON-REGION','江西','15',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(31,'COMMON-REGION','山东','16',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(32,'COMMON-REGION','河南','17',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(33,'COMMON-REGION','湖北','18',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(34,'COMMON-REGION','湖南','19',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(35,'COMMON-REGION','广东','20',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(36,'COMMON-REGION','海南','21',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(37,'COMMON-REGION','四川','22',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(38,'COMMON-REGION','贵州','23',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(39,'COMMON-REGION','云南','24',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(40,'COMMON-REGION','陕西','25',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(41,'COMMON-REGION','甘肃','26',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(42,'COMMON-REGION','青海','27',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(43,'COMMON-REGION','内蒙古','28',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(44,'COMMON-REGION','广西','29',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(45,'COMMON-REGION','西藏','30',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(46,'COMMON-REGION','宁夏','31',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(47,'COMMON-REGION','新疆','32',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(48,'COMMON-REGION','香港','33',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL),(49,'COMMON-REGION','澳门','34',NULL,NULL,NULL,0,'2016-01-08 13:25:23',NULL,'2016-01-08 13:25:23',NULL);
+
+/*Table structure for table `tb_d_menu` */
+
+DROP TABLE IF EXISTS `tb_d_menu`;
+
+CREATE TABLE `tb_d_menu` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MENUNAME` varchar(50) DEFAULT NULL COMMENT '菜单名称',
+  `MENUICON` varchar(50) DEFAULT NULL COMMENT '菜单图标，收藏的是菜单图标的路径',
+  `PARENTID` int(11) DEFAULT NULL COMMENT '父节点ID',
+  `TARGET` varchar(50) DEFAULT NULL COMMENT '节点展示目标',
+  `MENUHREF` varchar(50) DEFAULT NULL COMMENT '导航地址',
+  `ISSHOW` int(4) DEFAULT '1' COMMENT '是否显示,0:不显示，1：显示',
+  `SORTCODE` int(4) DEFAULT NULL COMMENT '排序码,升序排列',
+  `ALLOWDEL` int(4) DEFAULT '1' COMMENT '允许删除，0：不允许，1：允许',
+  `ALLOWEDIT` int(4) DEFAULT '1' COMMENT '允许编辑，0：不允许，1:允许',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='菜单表,资源的一种';
+
+/*Data for the table `tb_d_menu` */
+
+insert  into `tb_d_menu`(`ID`,`MENUNAME`,`MENUICON`,`PARENTID`,`TARGET`,`MENUHREF`,`ISSHOW`,`SORTCODE`,`ALLOWDEL`,`ALLOWEDIT`,`REMARKS`,`DELMARK`,`CREATETIME`,`CREATEUSERID`,`MODIFYTIME`,`MODIFYUSERID`) values (1,'信息安全综合治理平台',NULL,-1,NULL,NULL,1,NULL,1,1,NULL,0,'2015-12-21 16:30:47',NULL,'2015-12-21 16:30:51',NULL),(2,'首页',NULL,1,NULL,'/help.do',1,NULL,1,1,NULL,0,'2016-01-11 21:27:50',NULL,'2015-12-21 16:10:16',NULL),(3,'项目管理',NULL,1,NULL,NULL,1,NULL,1,1,NULL,0,'2016-01-11 21:28:07',NULL,'2015-12-21 16:24:59',NULL),(4,'项目发布',NULL,3,NULL,'/projects/project/listView.do',1,NULL,1,1,NULL,0,'2016-01-11 21:31:13',NULL,'2015-12-21 16:26:24',NULL),(5,'用户管理',NULL,1,NULL,'',1,NULL,1,1,NULL,0,'2015-12-22 13:40:10',NULL,'2015-12-22 13:08:34',NULL),(6,'用户管理',NULL,5,NULL,'/ucenter/user/listView.do',1,NULL,1,1,NULL,0,'2016-01-08 12:37:03',NULL,'2015-12-22 13:39:49',NULL),(7,'用户组',NULL,5,NULL,'/ucenter/usergroup/listView.do',1,NULL,1,1,NULL,0,'2015-12-25 14:59:02',NULL,'2015-12-25 14:59:05',NULL),(8,'角色管理',NULL,5,NULL,'/ucenter/role/mainView.do',1,NULL,1,1,NULL,0,'2015-12-30 11:50:41',9,'2015-12-25 15:50:06',NULL),(9,'部门管理',NULL,5,NULL,'/ucenter/dept/listView.do',1,NULL,1,1,NULL,0,'2016-01-08 15:51:16',NULL,'2016-01-08 15:51:10',NULL),(10,'投票管理',NULL,1,NULL,NULL,1,NULL,1,1,NULL,0,'2016-01-11 21:29:32',NULL,'2016-01-11 21:29:30',NULL),(11,'投票发布',NULL,10,NULL,'/votes/vote/listView.do',1,NULL,1,1,NULL,0,'2016-01-11 21:29:34',NULL,'2016-01-11 21:29:32',NULL),(12,NULL,NULL,NULL,NULL,NULL,1,NULL,1,1,NULL,0,'2016-01-11 21:29:36',NULL,'2016-01-11 21:29:34',NULL),(13,NULL,NULL,NULL,NULL,NULL,1,NULL,1,1,NULL,0,'2016-01-11 21:30:47',NULL,'2016-01-11 21:29:36',NULL);
+
+/*Table structure for table `tb_d_message` */
+
+DROP TABLE IF EXISTS `tb_d_message`;
+
+CREATE TABLE `tb_d_message` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `FROMUSERNAME` varchar(64) DEFAULT NULL COMMENT '发消息人，系统UISERID',
+  `ISALL` tinyint(4) DEFAULT NULL,
+  `TITLE` varchar(50) DEFAULT NULL COMMENT '标题',
+  `CONTENT` longtext COMMENT '内容',
+  `URL` varchar(200) DEFAULT NULL COMMENT 'URL,图文消息',
+  `EXTFILE` varchar(200) DEFAULT NULL COMMENT '附件,地址',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  `ALLOWCOMMENT` tinyint(4) DEFAULT NULL COMMENT '是否允许评论,0:否,1:是',
+  `ALLOWWATERMARK` tinyint(4) DEFAULT NULL COMMENT '是否添加水印,0:否,1:是',
+  `ALLOWSHARE` tinyint(4) DEFAULT NULL COMMENT '是否允许分享,0:否,1:是',
+  `ALLOWMASS` tinyint(4) DEFAULT NULL COMMENT '群发提醒,0:否,1:是',
+  `ALLOWONTIME` tinyint(4) DEFAULT NULL COMMENT '是否开启定时,0:否,1:是',
+  `ONTIME` timestamp NULL DEFAULT NULL COMMENT '预约发送时间[定时]',
+  `STATUS` tinyint(4) DEFAULT NULL COMMENT '状态,0:草稿,1:已发送,2:已作废',
+  `KINDSID` int(11) DEFAULT NULL COMMENT '分类ID,目前我的猜测这个是[标签]',
+  `ALLOWSHOW` tinyint(4) DEFAULT NULL COMMENT '是否显示,0:否,1:是',
+  `AGREECOUNT` int(11) DEFAULT NULL COMMENT '赞成数[点赞]',
+  `MSG_TYPE` varchar(16) DEFAULT NULL COMMENT '消息类型',
+  `AGENT_ID` varchar(16) DEFAULT NULL COMMENT '微信应用ID',
+  `TO_USER` varchar(17000) DEFAULT NULL COMMENT '用户ID列表',
+  `TO_PARTY` varchar(512) DEFAULT NULL COMMENT '部门ID列表',
+  `TO_TAG` varchar(512) DEFAULT NULL COMMENT '标签ID列表',
+  `PIC_URL` varchar(512) DEFAULT NULL COMMENT '图文消息对应的图片URL',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='公告消息表';
+
+/*Data for the table `tb_d_message` */
+
+/*Table structure for table `tb_d_message_comment` */
+
+DROP TABLE IF EXISTS `tb_d_message_comment`;
+
+CREATE TABLE `tb_d_message_comment` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `OPENID` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '微信ID',
+  `MESSID` int(11) DEFAULT NULL COMMENT '公告Id',
+  `COMMENT` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '评论内容',
+  `REMARKS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注',
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `CREATEUSERID` int(11) DEFAULT NULL,
+  `MODIFYTIME` timestamp NULL DEFAULT NULL,
+  `MODIFYUSERID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tb_d_message_comment` */
+
+/*Table structure for table `tb_d_message_receiver` */
+
+DROP TABLE IF EXISTS `tb_d_message_receiver`;
+
+CREATE TABLE `tb_d_message_receiver` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MESSAGEID` int(11) DEFAULT NULL,
+  `RECEIVERUSERNAME` varchar(64) DEFAULT NULL,
+  `ISSEND` int(4) DEFAULT NULL COMMENT '是否已发送，0：草稿，1：发送失败，2：已发送',
+  `SENDTIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '发送时间',
+  `ISREAD` int(4) DEFAULT NULL COMMENT '是否已阅读，0：未阅读，1：已阅读',
+  `READTIME` timestamp NULL DEFAULT NULL COMMENT '阅读时间',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='公告消息接收者';
+
+/*Data for the table `tb_d_message_receiver` */
+
+/*Table structure for table `tb_d_partner` */
+
+DROP TABLE IF EXISTS `tb_d_partner`;
+
+CREATE TABLE `tb_d_partner` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PARTNERNAME` varchar(50) DEFAULT NULL COMMENT '名称',
+  `INDUSTRY` varchar(50) DEFAULT NULL COMMENT '行业',
+  `PARTNERADDR` varchar(100) DEFAULT NULL COMMENT '公司地址',
+  `PARTNERWEB` varchar(50) DEFAULT NULL COMMENT '公司门户网址',
+  `PARTNERBRIEF` text COMMENT '公司简介',
+  `PARTNERLOGO` varchar(100) DEFAULT NULL COMMENT '公司LOGO',
+  `PARTNEREXPERIENCE` varchar(100) DEFAULT NULL COMMENT '公司资质',
+  `USERID` int(11) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合作厂商表';
+
+/*Data for the table `tb_d_partner` */
+
+/*Table structure for table `tb_d_projects` */
+
+DROP TABLE IF EXISTS `tb_d_projects`;
+
+CREATE TABLE `tb_d_projects` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PROJECTNAME` varchar(200) DEFAULT NULL COMMENT '项目名称',
+  `PROJECTBRIEF` varchar(200) DEFAULT NULL COMMENT '项目摘要',
+  `PROJECTSTATUS` int(4) DEFAULT NULL COMMENT '项目状态：0：发布，1：众筹，2：验收 ，3：完成',
+  `PROJECTCONTENT` longtext COMMENT '项目描述',
+  `PROJECTLOGO` varchar(100) DEFAULT NULL COMMENT '项目LOGO',
+  `COVERIMAGE` varchar(100) DEFAULT NULL COMMENT '封面图',
+  `STARTTIME` date DEFAULT NULL COMMENT '项目发布时间',
+  `CROWDTIME` date DEFAULT NULL COMMENT '项目众筹时间',
+  `EXAMINETIME` date DEFAULT NULL COMMENT '项目验收时间',
+  `ENDTIME` date DEFAULT NULL COMMENT '项目结束时间',
+  `AGREECOUNT` int(11) DEFAULT NULL COMMENT '集赞票数',
+  `AGAINSTCOUNT` int(11) DEFAULT NULL COMMENT '集反对票数',
+  `ISALLOWEDAGREE` int(4) DEFAULT NULL COMMENT '是否允许点赞，0：不允许，1：允许对本项目点赞，2：允许对子项目点赞，3：同时允许',
+  `MAXAGREELIMIT` int(4) DEFAULT NULL COMMENT '最大可点赞的子项目数',
+  `PARENTID` char(10) DEFAULT NULL COMMENT '父项目ID',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目表';
+
+/*Data for the table `tb_d_projects` */
+
+/*Table structure for table `tb_d_roles` */
+
+DROP TABLE IF EXISTS `tb_d_roles`;
+
+CREATE TABLE `tb_d_roles` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ROLENAME` varchar(50) DEFAULT NULL COMMENT '角色名称',
+  `ROLENO` varchar(50) DEFAULT NULL COMMENT '角色编码',
+  `SORTCODE` int(4) DEFAULT NULL COMMENT '排序码，升序排列',
+  `ALLOWDEL` int(4) DEFAULT '0' COMMENT '允许删除，0：不允许，1：允许',
+  `ALLOWEDIT` int(4) DEFAULT '0' COMMENT '允许编辑，0：不允许，1:允许',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `tb_d_roles` */
+
+/*Table structure for table `tb_d_uniskuser` */
+
+DROP TABLE IF EXISTS `tb_d_uniskuser`;
+
+CREATE TABLE `tb_d_uniskuser` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USERNAME` varchar(50) DEFAULT NULL COMMENT '用户名',
+  `PASSWORD` varchar(50) DEFAULT NULL COMMENT '密码，SHA-1加密',
+  `REALNAME` varchar(50) DEFAULT NULL COMMENT '真实姓名',
+  `SEX` int(4) DEFAULT NULL COMMENT '性别，0：女，1：男',
+  `PHONE` varchar(32) DEFAULT NULL COMMENT '电话',
+  `MOBILE` varchar(32) DEFAULT NULL COMMENT '手机',
+  `EMAIL` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `TITLE` varchar(50) DEFAULT NULL COMMENT '职称',
+  `DEPTID` int(11) DEFAULT NULL COMMENT '部门ID',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `ISLOCK` int(4) DEFAULT NULL COMMENT '是否锁定，0：未锁定，1：锁定',
+  `DISABLETIME` date DEFAULT NULL COMMENT '失效时间，创建用户时添加',
+  `STATUS` int(4) DEFAULT NULL COMMENT '审核状态，0：新建，1：可用，2：不可用',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  `PROVID` varchar(16) DEFAULT NULL COMMENT '省分VALUE',
+  `WECHATSTATUS` tinyint(4) DEFAULT NULL COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `用户名唯一索引` (`USERNAME`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='用户表，承载用户的信息';
+
+/*Data for the table `tb_d_uniskuser` */
+
+insert  into `tb_d_uniskuser`(`ID`,`USERNAME`,`PASSWORD`,`REALNAME`,`SEX`,`PHONE`,`MOBILE`,`EMAIL`,`TITLE`,`DEPTID`,`REMARKS`,`ISLOCK`,`DISABLETIME`,`STATUS`,`DELMARK`,`CREATETIME`,`CREATEUSERID`,`MODIFYTIME`,`MODIFYUSERID`,`PROVID`,`WECHATSTATUS`) values (1,'18611280827','ad3fe04f42b0026d1e444955f6ab01f2fffdc7d5','徐皓',1,'18611280827','18611280827','xuh26@chinaunicom.cn',NULL,5,'徐皓测试',NULL,NULL,NULL,0,'2016-01-12 13:31:56',NULL,'2016-01-12 13:40:11',NULL,'0',3),(7,'shijb11','ad3fe04f42b0026d1e444955f6ab01f2fffdc7d5','施敬邦',1,'15910349281','15910349281','shijb11@chainunicom.cn',NULL,5,'',NULL,NULL,NULL,0,'2016-01-12 13:56:22',NULL,'2016-01-12 13:56:24',NULL,'0',3);
+
+/*Table structure for table `tb_d_usergroup` */
+
+DROP TABLE IF EXISTS `tb_d_usergroup`;
+
+CREATE TABLE `tb_d_usergroup` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `GROUPNAME` varchar(50) DEFAULT NULL COMMENT '用户组名',
+  `PARENTID` int(11) DEFAULT NULL COMMENT '父节点',
+  `GROUPNO` char(10) DEFAULT NULL COMMENT '用户组编号',
+  `ALLOWDEL` int(4) DEFAULT '1' COMMENT '允许删除，0：不允许，1：允许',
+  `ALLOWEDIT` int(4) DEFAULT '1' COMMENT '允许编辑，0：不允许，1:允许',
+  `SORTCODE` int(4) DEFAULT NULL COMMENT '排序码,升序排列',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  `WECHATSTATUS` tinyint(4) DEFAULT NULL COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户组，虚拟的部门，用户和用户组之间是多对多的关系。\n用户组区别去部门，部门和用户之间是严格一对多的关系。\n';
+
+/*Data for the table `tb_d_usergroup` */
+
+insert  into `tb_d_usergroup`(`ID`,`GROUPNAME`,`PARENTID`,`GROUPNO`,`ALLOWDEL`,`ALLOWEDIT`,`SORTCODE`,`REMARKS`,`DELMARK`,`CREATETIME`,`CREATEUSERID`,`MODIFYTIME`,`MODIFYUSERID`,`WECHATSTATUS`) values (1,'徐皓测试',0,NULL,1,1,NULL,'徐皓测试',1,'2016-01-12 08:42:47',NULL,'2016-01-08 16:56:11',NULL,NULL),(2,'联通时科(北京)信息技术有限公司',0,NULL,1,1,NULL,'测试微信接口同步',0,'2016-01-12 08:43:42',NULL,'2016-01-12 08:43:42',NULL,NULL),(3,'测试',0,NULL,1,1,NULL,'具备微信管理组的权限',0,'2016-01-12 10:05:18',NULL,'2016-01-12 10:05:18',NULL,NULL);
+
+/*Table structure for table `tb_d_vote` */
+
+DROP TABLE IF EXISTS `tb_d_vote`;
+
+CREATE TABLE `tb_d_vote` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TITLE` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT '标题',
+  `DEADLINETIME` date DEFAULT NULL COMMENT '截止日期',
+  `ISALL` tinyint(4) DEFAULT NULL COMMENT '是否ALL，0：否，1：@ALL',
+  `HEADCONTENT` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '首语',
+  `FOOTERCONTENT` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '尾语',
+  `ALLOWSHOWRESULT` tinyint(4) DEFAULT NULL COMMENT '是否允许成员查看投票结果,0:否,1:是',
+  `ALLOWANONYMAT` tinyint(4) DEFAULT NULL COMMENT '是否允许成员匿名投票',
+  `FROMUSERID` int(11) DEFAULT NULL COMMENT '创建投票的成员系统ID',
+  `STATUS` tinyint(4) DEFAULT NULL COMMENT '状态,0:草稿,1:已发布,2:收集中,3:已结束,',
+  `REMARKS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注',
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `MODIFYTIME` timestamp NULL DEFAULT NULL,
+  `CREATEUSERID` int(11) DEFAULT NULL,
+  `MODIFYUSERID` int(11) DEFAULT NULL,
+  `VOTEURL` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '投票静态URL',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tb_d_vote` */
+
+/*Table structure for table `tb_d_vote_result` */
+
+DROP TABLE IF EXISTS `tb_d_vote_result`;
+
+CREATE TABLE `tb_d_vote_result` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VOTEID` int(11) DEFAULT NULL COMMENT '投票ID',
+  `TOPICID` int(11) DEFAULT NULL COMMENT '话题ID',
+  `OPTIONID` int(11) DEFAULT NULL COMMENT '项ID',
+  `OPTIONEXTID` int(11) DEFAULT NULL COMMENT '用户自定义项ID',
+  `ALLOWANONYMITY` tinyint(4) DEFAULT NULL COMMENT '是否匿名投票,0:否,1:是',
+  `VOTEUSERID` int(11) DEFAULT NULL COMMENT '投票人ID',
+  `REMARKS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MODIFYTIME` timestamp NULL DEFAULT NULL,
+  `CREATEUSERID` int(11) DEFAULT NULL,
+  `MODIFYUSERID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tb_d_vote_result` */
+
+/*Table structure for table `tb_d_vote_topic` */
+
+DROP TABLE IF EXISTS `tb_d_vote_topic`;
+
+CREATE TABLE `tb_d_vote_topic` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VOTEID` int(11) DEFAULT NULL COMMENT '投票ID',
+  `KINDS` tinyint(4) DEFAULT NULL COMMENT '类型,来源于字典表,0:单元,1:多选',
+  `TITLE` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '题目',
+  `MAXVOTE` int(11) DEFAULT NULL COMMENT '每人最多可投票数,对于单选项,该项值为1',
+  `MIXVOTE` int(11) DEFAULT NULL COMMENT '每人最少可投票数,对于单选项,该项值为1',
+  `ALLOWUSERDEFINE` tinyint(4) DEFAULT NULL COMMENT '是否允许用户自定义答案,0:是,1:否',
+  `SORTCODE` int(11) DEFAULT NULL COMMENT '排序,正序',
+  `REMARKS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MODIFYTIME` timestamp NULL DEFAULT NULL,
+  `CREATEUSERID` int(11) DEFAULT NULL,
+  `MODIFYUSERID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tb_d_vote_topic` */
+
+/*Table structure for table `tb_d_vote_topic_ext_options` */
+
+DROP TABLE IF EXISTS `tb_d_vote_topic_ext_options`;
+
+CREATE TABLE `tb_d_vote_topic_ext_options` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VOTEID` int(11) DEFAULT NULL COMMENT '投票ID',
+  `TOPICID` int(11) DEFAULT NULL COMMENT '投票题目ID',
+  `KINDS` int(11) DEFAULT NULL COMMENT '选项类型,冗余字段',
+  `OPTIONS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '选项',
+  `OPTIONSIMG` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '选项图示',
+  `OPTIONHTML` text COLLATE utf8_unicode_ci COMMENT '选项的页面HTML代码[保留]',
+  `SORTCODE` int(11) DEFAULT NULL COMMENT '排序,正序',
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MODIFYTIME` timestamp NULL DEFAULT NULL,
+  `CREATEUSERID` int(11) DEFAULT NULL,
+  `MODIFYUSERID` int(11) DEFAULT NULL,
+  `REMARKS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tb_d_vote_topic_ext_options` */
+
+/*Table structure for table `tb_d_vote_topic_options` */
+
+DROP TABLE IF EXISTS `tb_d_vote_topic_options`;
+
+CREATE TABLE `tb_d_vote_topic_options` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `VOTEID` int(11) DEFAULT NULL COMMENT '投票ID',
+  `TOPICID` int(11) DEFAULT NULL COMMENT '投票题目ID',
+  `KINDS` int(11) DEFAULT NULL COMMENT '选项类型,冗余字段',
+  `OPTIONS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '选项',
+  `OPTIONSIMG` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '选项图示',
+  `OPTIONHTML` text COLLATE utf8_unicode_ci COMMENT '选项的页面HTML代码[保留]',
+  `SORTCODE` int(11) DEFAULT NULL COMMENT '排序,正序',
+  `DELMARK` tinyint(4) DEFAULT NULL COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `MODIFYTIME` timestamp NULL DEFAULT NULL,
+  `CREATEUSERID` int(11) DEFAULT NULL,
+  `MODIFYUSERID` int(11) DEFAULT NULL,
+  `REMARKS` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+/*Data for the table `tb_d_vote_topic_options` */
+
+/*Table structure for table `tb_d_wechat_user` */
+
+DROP TABLE IF EXISTS `tb_d_wechat_user`;
+
+CREATE TABLE `tb_d_wechat_user` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `SYSUSERID` int(11) DEFAULT NULL,
+  `OPENID` varchar(64) DEFAULT NULL,
+  `WEIXINID` varchar(64) DEFAULT NULL,
+  `ATATARMEDIAID` varchar(200) DEFAULT NULL,
+  `EXTATTR` text,
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='微信用户信息表';
+
+/*Data for the table `tb_d_wechat_user` */
+
+/*Table structure for table `tb_r_partner2project` */
+
+DROP TABLE IF EXISTS `tb_r_partner2project`;
+
+CREATE TABLE `tb_r_partner2project` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PROJECTID` int(11) DEFAULT NULL,
+  `PARTNERID` int(11) DEFAULT NULL,
+  `STATUS` int(4) DEFAULT NULL COMMENT '状态，0：待审核，1：已通过，2：未通过',
+  `CHECKTIME` date DEFAULT NULL COMMENT '审核时间',
+  `CHECKUSERID` int(11) DEFAULT NULL COMMENT '审核人',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='项目领取关系表';
+
+/*Data for the table `tb_r_partner2project` */
+
+/*Table structure for table `tb_r_role_and_privilege` */
+
+DROP TABLE IF EXISTS `tb_r_role_and_privilege`;
+
+CREATE TABLE `tb_r_role_and_privilege` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MASTER` int(11) DEFAULT NULL COMMENT '主体：用户：USER，用户组：USERGROUP，部门：DEPARTMENT',
+  `MASTERVALUE` char(10) DEFAULT NULL COMMENT '主体值，USERID，USERGROUPID，DEPTID',
+  `PRIVILEGEACCESS` varchar(16) DEFAULT NULL COMMENT '权限受体资源，菜单：MENU，按钮：BUTTON\n            前缀：TB_D_',
+  `PRIVILEGEACCESSVALUE` int(11) DEFAULT NULL COMMENT '权限受体资源值，MENUID,BUTTONID',
+  `PRIVILEGEOPERATION` varchar(16) DEFAULT NULL COMMENT '操作：enabled，disabled',
+  `PRIVILEGENO` varchar(50) DEFAULT NULL COMMENT '权限受体资源编码',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限涵盖资源表\n资源包括：菜单，按钮等等\n用户直接配置权限是对角色所拥有的权限的一个补充。';
+
+/*Data for the table `tb_r_role_and_privilege` */
+
+/*Table structure for table `tb_r_subject_and_roles` */
+
+DROP TABLE IF EXISTS `tb_r_subject_and_roles`;
+
+CREATE TABLE `tb_r_subject_and_roles` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MASTER` varchar(32) DEFAULT NULL COMMENT '主体，用户类型：USER，用户组类型：USERGROUP，部门类型：DEPARTMENT\n            前缀：TB_D_ + 主体所得值，既是主体所在表名',
+  `MASTERVALUE` int(11) DEFAULT NULL COMMENT '主体值，数值类型，分别为USERID，USERGROUPID,DEPTID',
+  `ROLEID` int(11) DEFAULT NULL COMMENT '角色ID',
+  `REMARKS` varchar(200) DEFAULT NULL COMMENT '备注',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='主体角色关系表,\n主体：用户，用户组，部门\n三种主体均与角色是多对多的关系';
+
+/*Data for the table `tb_r_subject_and_roles` */
+
+/*Table structure for table `tb_r_user_and_usergroup` */
+
+DROP TABLE IF EXISTS `tb_r_user_and_usergroup`;
+
+CREATE TABLE `tb_r_user_and_usergroup` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USERID` int(11) DEFAULT NULL COMMENT '用户ID',
+  `USERGROUPID` int(11) DEFAULT NULL COMMENT '用户组ID',
+  `DELMARK` int(4) NOT NULL DEFAULT '0' COMMENT '删除标记，0：存在，1：删除',
+  `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `CREATEUSERID` int(11) DEFAULT NULL COMMENT '创建人',
+  `MODIFYTIME` timestamp NULL DEFAULT NULL COMMENT '修改时间',
+  `MODIFYUSERID` int(11) DEFAULT NULL COMMENT '修改人',
+  `WECHATSTATUS` tinyint(4) DEFAULT NULL COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户组用户关系表';
+
+/*Data for the table `tb_r_user_and_usergroup` */
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

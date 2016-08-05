@@ -1,0 +1,6 @@
+ALTER TABLE tb_d_department ADD COLUMN WECHATSTATUS TINYINT COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功';
+ALTER TABLE tb_d_uniskuser ADD COLUMN WECHATSTATUS TINYINT COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功';
+ALTER TABLE tb_d_usergroup ADD COLUMN WECHATSTATUS TINYINT COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功';
+ALTER TABLE tb_r_user_and_usergroup ADD COLUMN WECHATSTATUS TINYINT COMMENT '微信接口同步状态,0:未同步,1:已同步,2:更新失败,3:更新成功';
+
+ALTER TABLE tb_d_projects ADD COLUMN PROVID VARCHAR(16) COMMENT '省分ID';

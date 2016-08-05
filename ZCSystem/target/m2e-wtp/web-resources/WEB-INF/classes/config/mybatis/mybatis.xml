@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 设定MyBatis在运行时的行为方式 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		
+	</settings>
+	
+	<plugins>
+		<plugin interceptor="com.unisk.zc.core.support.PagePlugin">
+			<property name="dialect" value="mysql"/>
+			<!-- 使用mybatis查询时，拦截Mybatis中所有sqlId包含Page字符串的查询  -->
+			<property name="pageSqlId" value=".*Page.*"/>
+		</plugin>
+	</plugins>
+</configuration>

@@ -1,0 +1,57 @@
+/* CSS Document */
+#header{ width:1295px; overflow:hidden; border:1px solid #CCCCCC; background-color:#FFFFFF;}
+.logo{ display:inline; width:181px; height:92px;  float:left;}
+.leftsideBar{ float:right; height:92px; width:285px;}
+.head_img{ float:left; margin:28px 10px;}
+.head_txt{ color:#999999; font-size:18px; float:left; width:110px; letter-spacing:2px; height:92px; line-height:92px;}
+.head_line{ float:left; width:2px; border-left:2px solid #ccc; height:52px; margin:20px 0;}
+.head_shut{ float:right; margin:35px 10px 10px; width:90px; height:92px;}
+/*以上head css部分*/
+
+
+/*conten css部分*/
+.content{ width:1295px;}
+
+/*leftside 部分开始 后期要去除height值*/
+.leftside{float:left; width:181px;  background-color:#2C3E50; margin-top:-1px; height:1000px;}
+.mainNav{overflow:hidden; color:#fff; font-size:15px;}
+.mainNav ul li{line-height:30px; padding-left:12px; z-index:999; font-weight:200;}
+.mainNav ul li a{color:#fff;}
+.mainNav ul li  a:hover{ text-decoration:none; color:#C90; }
+.navbg{ background-color:#99CBED;}
+.subNav{ font-size:12px; font-weight:400;}
+.subNav ul li a{color:#888F97;}
+.subNav ul li span{color:#888F97; margin-left:30px; }
+/*leftside 部分结束*/
+
+/*以下为主要内容展示*/
+.rightside{ float:right; width:1040px; overflow:visible; background-color:#F7F8FA; padding:20px;}
+.con_title{ font-weight:400; font-size:28px; color:#333;}
+.mainMap{ width:945px; height:550px; overflow:hidden; position:relative; margin-top:20px; margin:0px; padding:0px;}
+.con_hidden{ position:absolute; right:50px; bottom:100px; width:130px; height:190px; overflow:visible; background-color:#6EB5E5; color:#FFFFFF; font-weight: 400;}
+.con_hidden table{ width:100%; max-width:100%; padding:0px; margin:0px; border-collapse:collapse;}
+.con_hidden table thead tr th{border: 1px solid #DDD;height:38px; text-align:center; background-color:#6EB5E5; color:#fff;font-size:14px;}
+.con_hidden table tbody tr td{border: 1px solid #DDD;height:38px; text-align:center; background-color:#6EB5E5; color:#fff;font-size:12px;}
+.con_box{ background-color:#FFFFFF; width:100%;}
+.box_head{ padding:0 20px; color: #333;text-align: left;  line-height:54px; height:54px;font-size: 28px; font-weight:400;}
+.box_title{ float:left; width:300px;} 
+.box_date_download{ float:right; width:200px;  text-align:center; }
+.box_date{ float:left;height:54px; line-height:54px;margin-top:20px; }
+.box_download{ float:right;height:54px; line-height:54px;}
+.box_btn{color:#fff; width:100%; border-radius:3px; background-color:#6EB5E5; margin-top:15px; border:none;font-weight: 400; height:30px; line-height:30px; font-size:14px;}
+.box_tbl{ overflow:hidden; position:relative;  line-height:25px; color:#000; text-align:center;padding:0 20px; width:1000px; }
+.box_tbl table{ width:100%; max-width:100%; padding:0px; margin:0px; border-collapse:collapse;}
+.box_tbl table thead tr th{border: 1px solid #fff; background-color:#6EB5E5; font-size: 18px; color:#fff;font-weight: 400; line-height:42px;}
+.box_tbl table tbody tr td{border: 1px solid #000;}
+
+/*以下css为分页样式*/
+.page_bar{ width:500px; height:40px; float:right; overflow:visible; margin:0px; padding:0px;}
+.page_bar_list{display: inline-block;}
+.page_bar_list li{ display:inline; list-style: outside none none; overflow: hidden; font-weight: 700; font-size: 16px; color:#000;}
+.page_bar_list li span{ position: relative; float: left; text-decoration: none; line-height: 1.42857;padding: 0px 5px;}
+.page_bar_list li span a{color:#000; text-decoration:none;}
+.page_bar_list li span a:hover{text-decoration:none; color:#C90;}
+.cur_page{color: #0DA4B8;}
+.page_skip{ height:25px; width:45px; text-align:center; border:1px solid #8C8D8E; }
+.page_skip_btn{ text-align:center; height:25px; width:65px; color:#fff; line-height:25px; font-weight:500;  background-color:#6EB5E5; border:none; border-radius:3px;}
+.page_common{color: #363636;text-align: center; font-size: 13px; font-weight:400; line-height:25px !important;}

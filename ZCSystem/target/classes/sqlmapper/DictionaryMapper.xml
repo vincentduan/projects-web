@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unisk.zc.mapper.DictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.unisk.zc.entitys.Dictionary" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="KINDS" property="kinds" jdbcType="VARCHAR" />
+    <result column="UKEY" property="ukey" jdbcType="VARCHAR" />
+    <result column="UVALUE" property="uvalue" jdbcType="VARCHAR" />
+    <result column="UMAXVALUE" property="umaxvalue" jdbcType="VARCHAR" />
+    <result column="UMINVALUE" property="uminvalue" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="DELMARK" property="delmark" jdbcType="TINYINT" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CREATEUSERID" property="createuserid" jdbcType="INTEGER" />
+    <result column="MODIFYTIME" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="MODIFYUSERID" property="modifyuserid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, KINDS, UKEY, UVALUE, UMAXVALUE, UMINVALUE, REMARKS, DELMARK, CREATETIME, CREATEUSERID, 
+    MODIFYTIME, MODIFYUSERID
+  </sql>
+  <select id="selectList" resultMap="BaseResultMap" resultType="java.util.List">
+  	select 
+    <include refid="Base_Column_List" />
+    from TB_D_DICTIONARY
+    where DELMARK = 0 
+    and DELMARK = 0
+    <if test="kinds != null">
+    	and KINDS = #{kinds , jdbcType=VARCHAR}
+    </if>
+    <if test="ukey != null">
+    	and UKEY = #{ukey , jdbcType=VARCHAR}
+    </if>
+    <if test="uvalue != null">
+    	and UVALUE = #{uvalue , jdbcType=VARCHAR}
+    </if>
+    order by UVALUE
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from TB_D_DICTIONARY
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from TB_D_DICTIONARY
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.unisk.zc.entitys.Dictionary" >
+    insert into TB_D_DICTIONARY (ID, KINDS, UKEY, 
+      UVALUE, UMAXVALUE, UMINVALUE, 
+      REMARKS, DELMARK, CREATETIME, 
+      CREATEUSERID, MODIFYTIME, MODIFYUSERID
+      )
+    values (#{id,jdbcType=INTEGER}, #{kinds,jdbcType=VARCHAR}, #{ukey,jdbcType=VARCHAR}, 
+      #{uvalue,jdbcType=VARCHAR}, #{umaxvalue,jdbcType=VARCHAR}, #{uminvalue,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{delmark,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{createuserid,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, #{modifyuserid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unisk.zc.entitys.Dictionary" >
+    insert into TB_D_DICTIONARY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="kinds != null" >
+        KINDS,
+      </if>
+      <if test="ukey != null" >
+        UKEY,
+      </if>
+      <if test="uvalue != null" >
+        UVALUE,
+      </if>
+      <if test="umaxvalue != null" >
+        UMAXVALUE,
+      </if>
+      <if test="uminvalue != null" >
+        UMINVALUE,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="delmark != null" >
+        DELMARK,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+      <if test="createuserid != null" >
+        CREATEUSERID,
+      </if>
+      <if test="modifytime != null" >
+        MODIFYTIME,
+      </if>
+      <if test="modifyuserid != null" >
+        MODIFYUSERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="kinds != null" >
+        #{kinds,jdbcType=VARCHAR},
+      </if>
+      <if test="ukey != null" >
+        #{ukey,jdbcType=VARCHAR},
+      </if>
+      <if test="uvalue != null" >
+        #{uvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="umaxvalue != null" >
+        #{umaxvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="uminvalue != null" >
+        #{uminvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delmark != null" >
+        #{delmark,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null" >
+        #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuserid != null" >
+        #{modifyuserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unisk.zc.entitys.Dictionary" >
+    update TB_D_DICTIONARY
+    <set >
+      <if test="kinds != null" >
+        KINDS = #{kinds,jdbcType=VARCHAR},
+      </if>
+      <if test="ukey != null" >
+        UKEY = #{ukey,jdbcType=VARCHAR},
+      </if>
+      <if test="uvalue != null" >
+        UVALUE = #{uvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="umaxvalue != null" >
+        UMAXVALUE = #{umaxvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="uminvalue != null" >
+        UMINVALUE = #{uminvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delmark != null" >
+        DELMARK = #{delmark,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null" >
+        CREATEUSERID = #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null" >
+        MODIFYTIME = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyuserid != null" >
+        MODIFYUSERID = #{modifyuserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unisk.zc.entitys.Dictionary" >
+    update TB_D_DICTIONARY
+    set KINDS = #{kinds,jdbcType=VARCHAR},
+      UKEY = #{ukey,jdbcType=VARCHAR},
+      UVALUE = #{uvalue,jdbcType=VARCHAR},
+      UMAXVALUE = #{umaxvalue,jdbcType=VARCHAR},
+      UMINVALUE = #{uminvalue,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      DELMARK = #{delmark,jdbcType=TINYINT},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{createuserid,jdbcType=INTEGER},
+      MODIFYTIME = #{modifytime,jdbcType=TIMESTAMP},
+      MODIFYUSERID = #{modifyuserid,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

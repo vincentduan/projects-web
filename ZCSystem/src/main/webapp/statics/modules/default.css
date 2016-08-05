@@ -1,0 +1,15 @@
+/* CSS Document */
+a{text-decoration:none;}
+a:hover{text-decoration:underline; color:#FF8400;}
+img{border:medium none;}
+﻿ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td{margin:0 auto;padding:0;}
+li{list-style:none;overflow:hidden;}
+body{font-family:"STHeitiSC-Light","Heiti SC Light","Heiti SC";font-size:12px; color:#000;padding:0px; background-color:#F7F7F7;margin:0px auto; color:#666;}
+.left{float:left;}
+.right{ float:right;}
+.both{clear:both}
+.hr5{ height:5px; overflow:hidden; line-height:1px; clear:both;}
+.hr10{ height:10px; overflow:hidden; line-height:1px; clear:both;}
+.font12{ font-size:12px;}
+.font14{ font-size:14px;}
+.font16{ font-size:16px;}

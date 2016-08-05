@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unisk.zc.mapper.ZtreeNodeMapper">
+	
+	<!-- 根据部门查用户树 -->
+	<select id="selectAllByDept" resultType="com.unisk.zc.entitys.ZtreeNode">
+		select * from (select d.ID id,d.PARENTID pId,d.DEPTNAME name,
+							  '' iconSkin,'true' isParent 
+						 from tb_d_department d 
+						 order by d.PARENTID,d.id) a
+		union all
+		select * from (select u.USERNAME id,u.DEPTID pId,u.REALNAME name,
+							  'user_glyphicon' iconSkin,'false' isParent
+						 from tb_d_uniskuser u
+						order by u.DEPTID,u.id) b
+	</select>
+
+	<!-- 根据标签查用户树 -->
+	<select id="selectAllByTag" resultType="com.unisk.zc.entitys.ZtreeNode">
+		select * from (select g.id,g.GROUPNAME name,g.PARENTID pId,
+		                      '' iconSkin,'true' isParent 
+		                 from tb_d_usergroup g 
+		                order by g.PARENTID,g.ID) a
+		union all
+		select * from (select u.USERNAME id,u.REALNAME name,r.USERGROUPID pId,
+							  'user_glyphicon' iconSkin,'false' isParent 
+					     from tb_d_uniskuser u,tb_r_user_and_usergroup r
+						where u.ID = r.USERID
+						order by r.USERGROUPID,r.USERID ) b
+	</select>
+
+</mapper>

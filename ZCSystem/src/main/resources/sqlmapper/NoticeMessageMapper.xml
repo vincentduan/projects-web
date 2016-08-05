@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unisk.zc.mapper.NoticeMessageMapper">
+	<resultMap id="BaseResultMap" type="com.unisk.zc.entitys.NoticeMessage">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="FROMUSERNAME" property="fromUserName" jdbcType="VARCHAR" />
+		<result column="ISALL" property="isAll" jdbcType="TINYINT" />
+		<result column="TITLE" property="title" jdbcType="VARCHAR" />
+		<result column="URL" property="url" jdbcType="VARCHAR" />
+		<result column="EXTFILE" property="extFile" jdbcType="VARCHAR" />
+		<result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+		<result column="DELMARK" property="delMark" jdbcType="INTEGER" />
+		<result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="CREATEUSERID" property="createUserId" jdbcType="INTEGER" />
+		<result column="MODIFYTIME" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="MODIFYUSERID" property="modifyUserId" jdbcType="INTEGER" />
+		<result column="ALLOWCOMMENT" property="allowComment" jdbcType="TINYINT" />
+		<result column="ALLOWWATERMARK" property="allowWaterMark"
+			jdbcType="TINYINT" />
+		<result column="ALLOWSHARE" property="allowShare" jdbcType="TINYINT" />
+		<result column="ALLOWMASS" property="allowMass" jdbcType="TINYINT" />
+		<result column="ALLOWONTIME" property="allowOnTime" jdbcType="TINYINT" />
+		<result column="ONTIME" property="onTime" jdbcType="TIMESTAMP" />
+		<result column="STATUS" property="status" jdbcType="TINYINT" />
+		<result column="ALLOWSHOW" property="allowShow" jdbcType="TINYINT" />
+		<result column="AGREECOUNT" property="agreeCount" jdbcType="INTEGER" />
+		<result column="MSG_TYPE" property="msgType" jdbcType="VARCHAR" />
+		<result column="AGENT_ID" property="agentId" jdbcType="VARCHAR" />
+		<result column="TO_USER" property="toUser" jdbcType="VARCHAR" />
+		<result column="TO_PARTY" property="toParty" jdbcType="VARCHAR" />
+		<result column="TO_TAG" property="toTag" jdbcType="VARCHAR" />
+		<result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+		<result column="KINDSID" property="kindsid" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.unisk.zc.entitys.NoticeMessage"
+		extends="BaseResultMap">
+		<result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, FROMUSERNAME, ISALL, TITLE, URL, EXTFILE, REMARKS, DELMARK, CREATETIME,
+		CREATEUSERID,
+		MODIFYTIME, MODIFYUSERID, ALLOWCOMMENT, ALLOWWATERMARK, ALLOWSHARE, ALLOWMASS,
+		ALLOWONTIME,
+		ONTIME, STATUS, KINDSID, ALLOWSHOW, AGREECOUNT, MSG_TYPE, AGENT_ID, TO_USER,
+		TO_PARTY,
+		TO_TAG, PIC_URL
+	</sql>
+	<sql id="Blob_Column_List">
+		CONTENT
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from tb_d_message
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_d_message
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.unisk.zc.entitys.NoticeMessage" keyProperty="id" useGeneratedKeys="true">
+		insert into tb_d_message (ID, FROMUSERNAME, ISALL,
+		TITLE, URL, EXTFILE,
+		REMARKS, DELMARK, CREATETIME,
+		CREATEUSERID, MODIFYTIME, MODIFYUSERID,
+		ALLOWCOMMENT, ALLOWWATERMARK, ALLOWSHARE,
+		ALLOWMASS, ALLOWONTIME, ONTIME,
+		STATUS, KINDSID, ALLOWSHOW,
+		AGREECOUNT, MSG_TYPE, AGENT_ID,
+		TO_USER, TO_PARTY, TO_TAG,
+		PIC_URL, CONTENT)
+		values (#{id,jdbcType=INTEGER}, #{fromUserName,jdbcType=VARCHAR},
+		#{isAll,jdbcType=TINYINT},
+		#{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{extFile,jdbcType=VARCHAR},
+		#{remarks,jdbcType=VARCHAR}, #{delMark,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{createUserId,jdbcType=INTEGER}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER},
+		#{allowComment,jdbcType=TINYINT}, #{allowWaterMark,jdbcType=TINYINT},
+		#{allowShare,jdbcType=TINYINT},
+		#{allowMass,jdbcType=TINYINT}, #{allowOnTime,jdbcType=TINYINT}, #{onTime,jdbcType=TIMESTAMP},
+		#{status,jdbcType=TINYINT}, #{kindsid,jdbcType=INTEGER},
+		#{allowShow,jdbcType=TINYINT},
+		#{agreeCount,jdbcType=INTEGER}, #{msgType,jdbcType=VARCHAR}, #{agentId,jdbcType=VARCHAR},
+		#{toUser,jdbcType=VARCHAR}, #{toParty,jdbcType=VARCHAR},
+		#{toTag,jdbcType=VARCHAR},
+		#{picUrl,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.unisk.zc.entitys.NoticeMessage" keyProperty="id" useGeneratedKeys="true">
+		insert into tb_d_message
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="fromUserName != null">
+				FROMUSERNAME,
+			</if>
+			<if test="isAll != null">
+				ISALL,
+			</if>
+			<if test="title != null">
+				TITLE,
+			</if>
+			<if test="url != null">
+				URL,
+			</if>
+			<if test="extFile != null">
+				EXTFILE,
+			</if>
+			<if test="remarks != null">
+				REMARKS,
+			</if>
+			<if test="delMark != null">
+				DELMARK,
+			</if>
+			<if test="createTime != null">
+				CREATETIME,
+			</if>
+			<if test="createUserId != null">
+				CREATEUSERID,
+			</if>
+			<if test="modifyTime != null">
+				MODIFYTIME,
+			</if>
+			<if test="modifyUserId != null">
+				MODIFYUSERID,
+			</if>
+			<if test="allowComment != null">
+				ALLOWCOMMENT,
+			</if>
+			<if test="allowWaterMark != null">
+				ALLOWWATERMARK,
+			</if>
+			<if test="allowShare != null">
+				ALLOWSHARE,
+			</if>
+			<if test="allowMass != null">
+				ALLOWMASS,
+			</if>
+			<if test="allowOnTime != null">
+				ALLOWONTIME,
+			</if>
+			<if test="onTime != null">
+				ONTIME,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="kindsid != null">
+				KINDSID,
+			</if>
+			<if test="allowShow != null">
+				ALLOWSHOW,
+			</if>
+			<if test="agreeCount != null">
+				AGREECOUNT,
+			</if>
+			<if test="msgType != null">
+				MSG_TYPE,
+			</if>
+			<if test="agentId != null">
+				AGENT_ID,
+			</if>
+			<if test="toUser != null">
+				TO_USER,
+			</if>
+			<if test="toParty != null">
+				TO_PARTY,
+			</if>
+			<if test="toTag != null">
+				TO_TAG,
+			</if>
+			<if test="picUrl != null">
+				PIC_URL,
+			</if>
+			<if test="content != null">
+				CONTENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="fromUserName != null">
+				#{fromUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="isAll != null">
+				#{isAll,jdbcType=TINYINT},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="extFile != null">
+				#{extFile,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delMark != null">
+				#{delMark,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=INTEGER},
+			</if>
+			<if test="allowComment != null">
+				#{allowComment,jdbcType=TINYINT},
+			</if>
+			<if test="allowWaterMark != null">
+				#{allowWaterMark,jdbcType=TINYINT},
+			</if>
+			<if test="allowShare != null">
+				#{allowShare,jdbcType=TINYINT},
+			</if>
+			<if test="allowMass != null">
+				#{allowMass,jdbcType=TINYINT},
+			</if>
+			<if test="allowOnTime != null">
+				#{allowOnTime,jdbcType=TINYINT},
+			</if>
+			<if test="onTime != null">
+				#{onTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="kindsid != null">
+				#{kindsid,jdbcType=INTEGER},
+			</if>
+			<if test="allowShow != null">
+				#{allowShow,jdbcType=TINYINT},
+			</if>
+			<if test="agreeCount != null">
+				#{agreeCount,jdbcType=INTEGER},
+			</if>
+			<if test="msgType != null">
+				#{msgType,jdbcType=VARCHAR},
+			</if>
+			<if test="agentId != null">
+				#{agentId,jdbcType=VARCHAR},
+			</if>
+			<if test="toUser != null">
+				#{toUser,jdbcType=VARCHAR},
+			</if>
+			<if test="toParty != null">
+				#{toParty,jdbcType=VARCHAR},
+			</if>
+			<if test="toTag != null">
+				#{toTag,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				#{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.unisk.zc.entitys.NoticeMessage">
+		update tb_d_message
+		<set>
+			<if test="fromUserName != null">
+				FROMUSERNAME = #{fromUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="isAll != null">
+				ISALL = #{isAll,jdbcType=TINYINT},
+			</if>
+			<if test="title != null">
+				TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				URL = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="extFile != null">
+				EXTFILE = #{extFile,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				REMARKS = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="delMark != null">
+				DELMARK = #{delMark,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				CREATETIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUserId != null">
+				CREATEUSERID = #{createUserId,jdbcType=INTEGER},
+			</if>
+			<if test="modifyTime != null">
+				MODIFYTIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				MODIFYUSERID = #{modifyUserId,jdbcType=INTEGER},
+			</if>
+			<if test="allowComment != null">
+				ALLOWCOMMENT = #{allowComment,jdbcType=TINYINT},
+			</if>
+			<if test="allowWaterMark != null">
+				ALLOWWATERMARK = #{allowWaterMark,jdbcType=TINYINT},
+			</if>
+			<if test="allowShare != null">
+				ALLOWSHARE = #{allowShare,jdbcType=TINYINT},
+			</if>
+			<if test="allowMass != null">
+				ALLOWMASS = #{allowMass,jdbcType=TINYINT},
+			</if>
+			<if test="allowOnTime != null">
+				ALLOWONTIME = #{allowOnTime,jdbcType=TINYINT},
+			</if>
+			<if test="onTime != null">
+				ONTIME = #{onTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="kindsid != null">
+				KINDSID = #{kindsid,jdbcType=INTEGER},
+			</if>
+			<if test="allowShow != null">
+				ALLOWSHOW = #{allowShow,jdbcType=TINYINT},
+			</if>
+			<if test="agreeCount != null">
+				AGREECOUNT = #{agreeCount,jdbcType=INTEGER},
+			</if>
+			<if test="msgType != null">
+				MSG_TYPE = #{msgType,jdbcType=VARCHAR},
+			</if>
+			<if test="agentId != null">
+				AGENT_ID = #{agentId,jdbcType=VARCHAR},
+			</if>
+			<if test="toUser != null">
+				TO_USER = #{toUser,jdbcType=VARCHAR},
+			</if>
+			<if test="toParty != null">
+				TO_PARTY = #{toParty,jdbcType=VARCHAR},
+			</if>
+			<if test="toTag != null">
+				TO_TAG = #{toTag,jdbcType=VARCHAR},
+			</if>
+			<if test="picUrl != null">
+				PIC_URL = #{picUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				CONTENT = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.unisk.zc.entitys.NoticeMessage">
+		update tb_d_message
+		set FROMUSERNAME = #{fromUserName,jdbcType=VARCHAR},
+		ISALL = #{isAll,jdbcType=TINYINT},
+		TITLE = #{title,jdbcType=VARCHAR},
+		URL = #{url,jdbcType=VARCHAR},
+		EXTFILE = #{extFile,jdbcType=VARCHAR},
+		REMARKS = #{remarks,jdbcType=VARCHAR},
+		DELMARK = #{delMark,jdbcType=INTEGER},
+		CREATETIME = #{createTime,jdbcType=TIMESTAMP},
+		CREATEUSERID = #{createUserId,jdbcType=INTEGER},
+		MODIFYTIME = #{modifyTime,jdbcType=TIMESTAMP},
+		MODIFYUSERID = #{modifyUserId,jdbcType=INTEGER},
+		ALLOWCOMMENT = #{allowComment,jdbcType=TINYINT},
+		ALLOWWATERMARK = #{allowWaterMark,jdbcType=TINYINT},
+		ALLOWSHARE = #{allowShare,jdbcType=TINYINT},
+		ALLOWMASS = #{allowMass,jdbcType=TINYINT},
+		ALLOWONTIME = #{allowOnTime,jdbcType=TINYINT},
+		ONTIME = #{onTime,jdbcType=TIMESTAMP},
+		STATUS = #{status,jdbcType=TINYINT},
+		KINDSID = #{kindsid,jdbcType=INTEGER},
+		ALLOWSHOW = #{allowShow,jdbcType=TINYINT},
+		AGREECOUNT = #{agreeCount,jdbcType=INTEGER},
+		MSG_TYPE = #{msgType,jdbcType=VARCHAR},
+		AGENT_ID = #{agentId,jdbcType=VARCHAR},
+		TO_USER = #{toUser,jdbcType=VARCHAR},
+		TO_PARTY = #{toParty,jdbcType=VARCHAR},
+		TO_TAG = #{toTag,jdbcType=VARCHAR},
+		PIC_URL = #{picUrl,jdbcType=VARCHAR},
+		CONTENT = #{content,jdbcType=LONGVARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.unisk.zc.entitys.NoticeMessage">
+		update tb_d_message
+		set FROMUSERNAME = #{fromUserName,jdbcType=VARCHAR},
+		ISALL = #{isAll,jdbcType=TINYINT},
+		TITLE = #{title,jdbcType=VARCHAR},
+		URL = #{url,jdbcType=VARCHAR},
+		EXTFILE = #{extFile,jdbcType=VARCHAR},
+		REMARKS = #{remarks,jdbcType=VARCHAR},
+		DELMARK = #{delMark,jdbcType=INTEGER},
+		CREATETIME = #{createTime,jdbcType=TIMESTAMP},
+		CREATEUSERID = #{createUserId,jdbcType=INTEGER},
+		MODIFYTIME = #{modifyTime,jdbcType=TIMESTAMP},
+		MODIFYUSERID = #{modifyUserId,jdbcType=INTEGER},
+		ALLOWCOMMENT = #{allowComment,jdbcType=TINYINT},
+		ALLOWWATERMARK = #{allowWaterMark,jdbcType=TINYINT},
+		ALLOWSHARE = #{allowShare,jdbcType=TINYINT},
+		ALLOWMASS = #{allowMass,jdbcType=TINYINT},
+		ALLOWONTIME = #{allowOnTime,jdbcType=TINYINT},
+		ONTIME = #{onTime,jdbcType=TIMESTAMP},
+		STATUS = #{status,jdbcType=TINYINT},
+		KINDSID = #{kindsid,jdbcType=INTEGER},
+		ALLOWSHOW = #{allowShow,jdbcType=TINYINT},
+		AGREECOUNT = #{agreeCount,jdbcType=INTEGER},
+		MSG_TYPE = #{msgType,jdbcType=VARCHAR},
+		AGENT_ID = #{agentId,jdbcType=VARCHAR},
+		TO_USER = #{toUser,jdbcType=VARCHAR},
+		TO_PARTY = #{toParty,jdbcType=VARCHAR},
+		TO_TAG = #{toTag,jdbcType=VARCHAR},
+		PIC_URL = #{picUrl,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<sql id="getNoticeMessageByWXIdSQLID">
+		select * from tb_d_message t where exists(
+				select 1 from tb_d_message_receiver r where r.MESSAGEID = t.ID
+				and r.RECEIVERUSERNAME = #{receiverusername,jdbcType=VARCHAR}
+		  )ORDER BY t.CREATETIME DESC
+	</sql>
+	
+	<select id="getNoticeMessageByWXId" parameterType="String" resultMap="BaseResultMap" >
+		<include refid="getNoticeMessageByWXIdSQLID"></include>
+	</select>
+	
+	<select id="getNoticeMessageByWXIdPage" parameterType="com.unisk.zc.entitys.NoticeMessageReceiver" resultMap="BaseResultMap" >
+		<include refid="getNoticeMessageByWXIdSQLID"></include>
+	</select>
+	
+	<resultMap type="java.util.HashMap" id="pageResultMap" extends="BaseResultMap"></resultMap>
+	
+	<!-- 注意：特殊字符要放在CDATA区域 -->
+	<select id="selectMapPageByRange" resultMap="pageResultMap" parameterType="com.unisk.zc.entitys.NoticeMessage">
+		select t.*,if(t.`STATUS`=0,'未发布',if(t.`STATUS`=1,'已发布','已作废')) statusName,
+			u.USERNAME creatorName from tb_d_message t left join tb_d_uniskuser u 
+			on t.CREATEUSERID = u.ID where 1=1
+			
+				<if test="queryMap.beginTime!=null" >
+					<![CDATA[
+					   and t.CREATETIME >= #{queryMap.beginTime}
+					]]>
+				</if>
+				<if test="queryMap.endTime != null">
+					<![CDATA[ 
+					   and t.CREATETIME <= #{queryMap.endTime}
+					]]>
+				</if>
+		
+			order by t.CREATETIME desc
+	</select>
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+	
+	<!-- 微信普通文本消息处理Handler -->
+	<bean class="com.unisk.wechat.web.support.handler.WechatTextMessageHandler">
+		<constructor-arg index="0" value="text"></constructor-arg>
+	</bean>
+	
+	<!-- 微信图片消息处理Handler -->
+	<bean class="com.unisk.wechat.web.support.handler.WechatImageMessageHandler">
+		<constructor-arg index="0" value="image"></constructor-arg>
+	</bean>
+	
+	<!-- 上报地理位置消息处理Handler -->
+	<bean class="com.unisk.wechat.web.support.handler.WechatLocationEventMessageHandler">
+		<constructor-arg index="0" value="event"></constructor-arg>
+		<constructor-arg index="1" value="LOCATION"></constructor-arg>
+	</bean>
+	
+	<!-- 成员关注事件处理Handler -->
+	<bean class="com.unisk.wechat.web.support.handler.WechatSubscribeEventMessageHandler">
+		<constructor-arg index="0" value="event"></constructor-arg>
+		<constructor-arg index="1" value="subscribe"></constructor-arg>
+	</bean>
+	
+	<bean class="com.unisk.wechat.web.support.handler.WechatPushNoticesMessageHandler">
+		<constructor-arg index="0" value="event" />
+		<constructor-arg index="1" value="click"/>
+		<constructor-arg index="2" value="WECHAT_CLICK_VIEW_NOTICES" />
+	</bean>
+	
+	<!-- 沃众筹公告应用凭证 -->
+	<bean id="noticeMsgCrypt" class="com.unisk.wechat.api.support.WXBizMsgCryptProvider" lazy-init="false">
+		<property name="sCorpID" value="${wo.wechat.CorpID}"></property>
+		<property name="sEncodingAESKey" value="${wzc.notice.wechat.EncodingAESKey}"></property>
+		<property name="sToken" value="${wzc.notice.wechat.token}"></property>
+	</bean>
+	
+	<!-- 沃众筹投票应用凭证 -->
+	<bean id="voteMsgCrypt" class="com.unisk.wechat.api.support.WXBizMsgCryptProvider" lazy-init="false">
+		<property name="sCorpID" value="${wo.wechat.CorpID}"></property>
+		<property name="sEncodingAESKey" value="${wzc.vote.wechat.EncodingAESKey}"></property>
+		<property name="sToken" value="${wzc.vote.wechat.token}"></property>
+	</bean>
+	
+	<!-- 沃众筹企业小助手应用凭证 -->
+	<bean id="assistantMsgCrypt" class="com.unisk.wechat.api.support.WXBizMsgCryptProvider" lazy-init="false">
+		<property name="sCorpID" value="${wo.wechat.CorpID}"></property>
+		<property name="sEncodingAESKey" value="${wo.assistant.wechat.EncodingAESKey}"></property>
+		<property name="sToken" value="${wo.assistant.wechat.token}"></property>
+	</bean>
+</beans>
