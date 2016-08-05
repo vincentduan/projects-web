@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	default-lazy-init="true"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<mvc:interceptors>
+		<bean class="com.lashou.t.auth.token.TokenValidInterceptor">
+			<constructor-arg ref="tokenRedisTemplate" />
+			<property name="tokenName" value="${token.tokenName?_ls_token}" />
+			<property name="timeout" value="${token.timeout?3600}" />
+		</bean>
+	</mvc:interceptors>
+	
+	<bean id="tokenRedisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="tokenJedisConnectionFactory" >
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="hashKeySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="hashValueSerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+	</bean>
+	<bean id="tokenJedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${t.redis.token.ip?10.10.1.5}" />
+		<property name="database" value="${t.redis.token.database?13}" />
+		<property name="port" value="${t.redis.token.port?6379}" />
+		<property name="timeout" value="${t.redis.token.timeout?10800}" />
+		<property name="usePool" value="true" />
+		<property name="poolConfig">
+			<bean class="redis.clients.jedis.JedisPoolConfig">
+				<property name="maxTotal" value="${t.redis.token.pool.maxActive?10}" />
+				<property name="maxIdle" value="${t.redis.token.pool.maxIdle?5}" />
+				<property name="maxWaitMillis" value="${t.redis.token.pool.maxWait?5}" />
+				<property name="testOnBorrow" value="${t.redis.token.pool.testOnBorrow?true}" />
+				<property name="testOnReturn" value="${t.redis.token.pool.testOnReturn?false}" />
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

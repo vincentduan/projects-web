@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+	<!-- <debug/> -->
+	<!--以下配置内容主要是配置，不通过security的filter的地址，pattern是页面输出的地址 -->
+	<!-- <http pattern="^.*\.(js|css|html|swf|jpg|png|gif|cur|ico)$" security="none" auto-config="true"
+		path-type="regex" /> -->
+	<http pattern="/**/js/**" security="none" create-session="never" />
+	<http pattern="/**/css/**" security="none" create-session="never" />
+	<http pattern="/**/img/**" security="none" create-session="never" />
+    <http pattern="/statapi/**" security="none" create-session="never" />
+    <http pattern="/balanceapi/**" security="none" create-session="never" />
+	<http pattern="/login/*" security="none" create-session="never" />
+	<http pattern="/login" security="none" create-session="never" />
+	<http pattern="/favicon.ico" security="none" create-session="never" />
+	<!--<http pattern="/" security="none" create-session="never" />-->
+	<http pattern="/open/**" security="none" create-session="never" />
+	<http pattern="/download/**" security="none" create-session="never" />
+	<!-- security的filter控制，首先实现的是当未登录时的操作。 -->
+	<http access-denied-page="/WEB-INF/view/error/403.jsp"
+		disable-url-rewriting="true"
+		use-expressions="true"
+		entry-point-ref="authenticationProcessingFilterEntryPoint"
+		auto-config="false" create-session="never">
+		<!-- 免登录验证 -->
+		<remember-me use-secure-cookie="true" key="v.lashou.com" user-service-ref="lashouUserDetailService" />
+    	<session-management session-authentication-strategy-ref="sas"/>
+		<!-- 登陆验证 -->
+		<custom-filter position="FORM_LOGIN_FILTER" ref="loginFilter" />
+		<custom-filter position="LOGOUT_FILTER" ref="logoutFilter" />
+		<custom-filter before="FORM_LOGIN_FILTER" ref="myrememberMeFilter" />
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrentSessionFilter" />
+		<!-- 权限验证 -->
+		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="securityFilter" />
+		<!-- slf4j logging filter-->
+		<custom-filter after="SECURITY_CONTEXT_FILTER" ref="mdcFilter" />
+
+		<!--<intercept-url pattern="/login/*" requires-channel="https" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+		<!--<intercept-url pattern="/login" requires-channel="https" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+		
+		<request-cache ref="httpSessionRequestCache" />
+	</http>
+
+	<!-- remember me -->
+	<beans:bean id="myrememberMeFilter" class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter">
+		<beans:property name="rememberMeServices" ref="rememberMeServices" />
+		<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+	</beans:bean>
+	<beans:bean id="rememberMeServices" class="com.lashou.t.auth.rememberme.LashouTokenBasedRememberMeServices">
+		<beans:property name="userDetailsService" ref="lashouUserDetailService" />
+		<beans:property name="key" value="${rememberme.key}" />
+		<beans:property name="cookieName" value="${rememberme.cookiename}" />
+		<beans:property name="tokenValiditySeconds" value="${rememberme.tokenvalidityseconds?1209600}" />
+	</beans:bean>
+	<beans:bean id="rememberMeAuthenticationProvider" class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+		<beans:property name="key" value="${rememberme.key}" />
+	</beans:bean>
+	
+	<!-- logout -->
+	<beans:bean id="logoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
+        <beans:constructor-arg index="0" value="/login/out"/>
+        <beans:constructor-arg index="1">
+            <beans:list>
+                <beans:ref bean="rememberMeServices"/>
+                <beans:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
+	<!-- 登录验证器 -->
+	<beans:bean id="loginFilter" class="com.lashou.t.auth.filter.LashouUsernamePasswordAuthenticationFilter">
+		<!--  -->
+		<beans:property name="filterProcessesUrl" value="/j_spring_security_check"/>
+		<beans:property name="authenticationSuccessHandler" ref="loginLogAuthenticationSuccessHandler"/>
+		<beans:property name="authenticationFailureHandler" ref="simpleUrlAuthenticationFailureHandler" />
+		<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+		<beans:property name="rememberMeServices" ref="rememberMeServices" />
+		<beans:property name="sessionAuthenticationStrategy" ref="sas" />
+	</beans:bean>
+	<beans:bean id="nonAjaxRequestMatcher" class="com.lashou.t.auth.NonAjaxRequestMatcher" />
+	<beans:bean id="httpSessionRequestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache">
+		<beans:property name="requestMatcher" ref="nonAjaxRequestMatcher"/>
+	</beans:bean>
+	<beans:bean id="loginLogAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/" />
+		<beans:property name="requestCache" ref="httpSessionRequestCache" />
+	</beans:bean>
+	<beans:bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/login" />
+	</beans:bean>
+
+	<!-- 认证过滤器 -->
+	<beans:bean id="securityFilter" class="com.lashou.t.auth.filter.BaseSecurityFilter">
+		<!-- 用户拥有的权限 -->
+		<beans:property name="authenticationManager" ref="myAuthenticationManager" />
+		<!-- 用户是否拥有所请求资源的权限 -->
+		<beans:property name="accessDecisionManager" ref="baseAccessDecisionManager" />
+		<!-- 资源与权限对应关系 -->
+		<beans:property name="securityMetadataSource" ref="lashouFilterInvocationSecurityMetadataSource" />
+	</beans:bean>
+	
+	<!-- 实现了UserDetailsService的Bean -->
+	<authentication-manager alias="myAuthenticationManager">
+		<authentication-provider user-service-ref="lashouUserDetailService" />
+		<authentication-provider ref="rememberMeAuthenticationProvider" />
+	</authentication-manager>
+
+	<beans:bean id="baseAccessDecisionManager" class="com.lashou.t.auth.filter.BaseAccessDecisionManager" />
+	
+	<beans:bean id="lashouFilterInvocationSecurityMetadataSource" class="com.lashou.t.auth.filter.LashouFilterInvocationSecurityMetadataSource">
+		<beans:constructor-arg name="securityManageService"	ref="securityManageService" />
+	</beans:bean>
+	
+	<beans:bean id="lashouUserDetailService" class="com.lashou.t.auth.filter.LashouUserDetailServiceImpl" />
+
+	<!-- 当用户没有权限访问时跳转的处理 -->
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="com.lashou.t.auth.tools.CustomerLoginUrlAuthenticationEntryPoint">
+		<beans:property name="loginFormUrl" value="/login" />
+	</beans:bean>
+
+	<beans:bean id="securityManageService" class="com.lashou.t.pb.service.impl.SecurityManageServiceImpl" />
+
+	<beans:bean id="concurrentSessionFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+		<beans:property name="sessionRegistry" ref="redisSessionRegistry" />
+	</beans:bean>
+	
+	<beans:bean id="sas" class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+		<beans:constructor-arg name="sessionRegistry" ref="redisSessionRegistry" />
+		<beans:property name="maximumSessions" value="10" />
+	</beans:bean>
+	
+	<beans:bean id="redisSessionRegistry" class="com.lashou.t.auth.session.RedisSessionRegistry" />
+	
+	<beans:import resource="session-cache.xml" />
+
+	<beans:bean id="mdcFilter" class="com.lashou.t.auth.filter.log.MdcFilter" />
+	
+</beans:beans>
