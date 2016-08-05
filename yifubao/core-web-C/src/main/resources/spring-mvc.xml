@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.efubao.core.bigc.controller" />
+
+	<import resource="spring-props.xml"/>
+	<!-- token interceptor -->
+	<!-- <import resource="com/efubao/t/auth/token.xml"/> -->
+
+	<bean name="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource">
+			<bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+				<property name="basenames" value="classpath:i18n/messages, classpath:i18n/errors" />
+				<property name="defaultEncoding" value="UTF-8" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+	
+	<!--====================== Spring MVC Configuration ====================== -->
+	<!-- Static Resource -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- Spring MVC Annotation -->
+	<mvc:annotation-driven />
+	
+	<!-- ViewResolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/view/" p:suffix=".jsp"/>
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">error/error</prop>
+				<prop key="java.lang.Throwable">error/error</prop>
+				<prop key="java.lang.RuntimeException">error/error</prop>
+				<prop key="java.sql.SQLException">error/error</prop>
+			</props>
+		</property>
+		<property name="statusCodes">
+			<props>
+				<prop key="error/error">500</prop>
+			</props>
+		</property>
+		<property name="warnLogCategory" value="WARN" />
+		<property name="defaultErrorView" value="error/error" />
+		<property name="defaultStatusCode" value="500" />
+	</bean>
+
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<bean  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" >-->
+                    <!--<property name="objectMapper">-->
+                        <!--<bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
+                            <!--<property name="propertyNamingStrategy">-->
+                                <!--<bean class="com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy" />-->
+                            <!--</property>-->
+                        <!--</bean>-->
+                    <!--</property>-->
+                <!--</bean>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!--02-->
+        <!--<property name="messageConverters">-->
+            <!--03-->
+            <!--<list>-->
+                <!--04-->
+                <!--<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+                    <!--05-->
+                    <!--<property name="objectMapper">-->
+                        <!--06-->
+                        <!--<bean class="com.fasterxml.jackson.databind.ObjectMapper">-->
+                            <!--07-->
+                            <!--<property name="propertyNamingStrategy">-->
+                                <!--08-->
+                                <!--<bean class="com.fasterxml.jackson.databind.PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy" />-->
+                                <!--09-->
+                            <!--</property>-->
+                            <!--10-->
+                        <!--</bean>-->
+                        <!--11-->
+                    <!--</property>-->
+                    <!--12-->
+
+                    <!--13-->
+                    <!--<property name="supportedMediaTypes">-->
+                        <!--14-->
+                        <!--<list>-->
+                            <!--15-->
+                            <!--<value>text/html;charset=UTF-8</value>-->
+                            <!--16-->
+                            <!--<value>application/json; charset=UTF-8</value>-->
+                            <!--17-->
+                        <!--</list>-->
+                        <!--18-->
+                    <!--</property>-->
+                    <!--19-->
+                <!--</bean>-->
+                <!--20-->
+            <!--</list>-->
+            <!--21-->
+        <!--</property>-->
+        <!--22-->
+    <!--</bean>-->
+
+</beans>
