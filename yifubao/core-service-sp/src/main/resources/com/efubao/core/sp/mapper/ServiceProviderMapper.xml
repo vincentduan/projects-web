@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.sp.mapper.ServiceProviderMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.sp.domain.ServiceProvider" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="CHAR" />
+    <result column="shortname" property="shortname" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="registered_addr" property="registeredAddr" jdbcType="VARCHAR" />
+    <result column="registered_capital" property="registeredCapital" jdbcType="DECIMAL" />
+    <result column="business_licence_no" property="businessLicenceNo" jdbcType="VARCHAR" />
+    <result column="tax_registration_no" property="taxRegistrationNo" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="business_start_date" property="businessStartDate" jdbcType="DATE" />
+    <result column="business_end_date" property="businessEndDate" jdbcType="DATE" />
+    <result column="business_range" property="businessRange" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="logo_image_path" property="logoImagePath" jdbcType="VARCHAR" />
+    <result column="service_category" property="serviceCategory" jdbcType="VARCHAR" />
+    <result column="is_support_measure" property="isSupportMeasure" jdbcType="BIT" />
+    <result column="creator_id" property="creatorId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updator" property="updator" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="check_state" property="checkState" jdbcType="INTEGER" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.efubao.core.sp.domain.ServiceProvider" extends="BaseResultMap" >
+    <result column="summary" property="summary" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, name, grade, shortname, company_name, legal_person, registered_addr, registered_capital, 
+    business_licence_no, tax_registration_no, org_code, business_start_date, business_end_date, 
+    business_range, remarks, status, logo_image_path, service_category, is_support_measure, 
+    creator_id, create_time, updator, update_time, check_state, is_del
+  </sql>
+  <sql id="Blob_Column_List" >
+    summary
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.efubao.core.sp.domain.ServiceProviderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_provider
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.sp.domain.ServiceProviderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from service_provider
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_provider
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from service_provider
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.sp.domain.ServiceProviderExample" >
+    delete from service_provider
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.sp.domain.ServiceProvider" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into service_provider (name, grade, shortname, 
+      company_name, legal_person, registered_addr, 
+      registered_capital, business_licence_no, tax_registration_no, 
+      org_code, business_start_date, business_end_date, 
+      business_range, remarks, status, 
+      logo_image_path, service_category, is_support_measure, 
+      creator_id, create_time, updator, 
+      update_time, check_state, is_del, 
+      summary)
+    values (#{name,jdbcType=VARCHAR}, #{grade,jdbcType=CHAR}, #{shortname,jdbcType=VARCHAR}, 
+      #{companyName,jdbcType=VARCHAR}, #{legalPerson,jdbcType=VARCHAR}, #{registeredAddr,jdbcType=VARCHAR}, 
+      #{registeredCapital,jdbcType=DECIMAL}, #{businessLicenceNo,jdbcType=VARCHAR}, #{taxRegistrationNo,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR}, #{businessStartDate,jdbcType=DATE}, #{businessEndDate,jdbcType=DATE}, 
+      #{businessRange,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{logoImagePath,jdbcType=VARCHAR}, #{serviceCategory,jdbcType=VARCHAR}, #{isSupportMeasure,jdbcType=BIT}, 
+      #{creatorId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updator,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{checkState,jdbcType=INTEGER}, #{isDel,jdbcType=BIT}, 
+      #{summary,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.sp.domain.ServiceProvider" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into service_provider
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="shortname != null" >
+        shortname,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="legalPerson != null" >
+        legal_person,
+      </if>
+      <if test="registeredAddr != null" >
+        registered_addr,
+      </if>
+      <if test="registeredCapital != null" >
+        registered_capital,
+      </if>
+      <if test="businessLicenceNo != null" >
+        business_licence_no,
+      </if>
+      <if test="taxRegistrationNo != null" >
+        tax_registration_no,
+      </if>
+      <if test="orgCode != null" >
+        org_code,
+      </if>
+      <if test="businessStartDate != null" >
+        business_start_date,
+      </if>
+      <if test="businessEndDate != null" >
+        business_end_date,
+      </if>
+      <if test="businessRange != null" >
+        business_range,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="logoImagePath != null" >
+        logo_image_path,
+      </if>
+      <if test="serviceCategory != null" >
+        service_category,
+      </if>
+      <if test="isSupportMeasure != null" >
+        is_support_measure,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updator != null" >
+        updator,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="checkState != null" >
+        check_state,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=CHAR},
+      </if>
+      <if test="shortname != null" >
+        #{shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredAddr != null" >
+        #{registeredAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredCapital != null" >
+        #{registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="businessLicenceNo != null" >
+        #{businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRegistrationNo != null" >
+        #{taxRegistrationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStartDate != null" >
+        #{businessStartDate,jdbcType=DATE},
+      </if>
+      <if test="businessEndDate != null" >
+        #{businessEndDate,jdbcType=DATE},
+      </if>
+      <if test="businessRange != null" >
+        #{businessRange,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="logoImagePath != null" >
+        #{logoImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCategory != null" >
+        #{serviceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="isSupportMeasure != null" >
+        #{isSupportMeasure,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        #{updator,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkState != null" >
+        #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.sp.domain.ServiceProviderExample" resultType="java.lang.Integer" >
+    select count(*) from service_provider
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update service_provider
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=CHAR},
+      </if>
+      <if test="record.shortname != null" >
+        shortname = #{record.shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        company_name = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.legalPerson != null" >
+        legal_person = #{record.legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeredAddr != null" >
+        registered_addr = #{record.registeredAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeredCapital != null" >
+        registered_capital = #{record.registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="record.businessLicenceNo != null" >
+        business_licence_no = #{record.businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxRegistrationNo != null" >
+        tax_registration_no = #{record.taxRegistrationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgCode != null" >
+        org_code = #{record.orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessStartDate != null" >
+        business_start_date = #{record.businessStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.businessEndDate != null" >
+        business_end_date = #{record.businessEndDate,jdbcType=DATE},
+      </if>
+      <if test="record.businessRange != null" >
+        business_range = #{record.businessRange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.logoImagePath != null" >
+        logo_image_path = #{record.logoImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceCategory != null" >
+        service_category = #{record.serviceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSupportMeasure != null" >
+        is_support_measure = #{record.isSupportMeasure,jdbcType=BIT},
+      </if>
+      <if test="record.creatorId != null" >
+        creator_id = #{record.creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updator != null" >
+        updator = #{record.updator,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkState != null" >
+        check_state = #{record.checkState,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+      <if test="record.summary != null" >
+        summary = #{record.summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update service_provider
+    set ID = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=CHAR},
+      shortname = #{record.shortname,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      legal_person = #{record.legalPerson,jdbcType=VARCHAR},
+      registered_addr = #{record.registeredAddr,jdbcType=VARCHAR},
+      registered_capital = #{record.registeredCapital,jdbcType=DECIMAL},
+      business_licence_no = #{record.businessLicenceNo,jdbcType=VARCHAR},
+      tax_registration_no = #{record.taxRegistrationNo,jdbcType=VARCHAR},
+      org_code = #{record.orgCode,jdbcType=VARCHAR},
+      business_start_date = #{record.businessStartDate,jdbcType=DATE},
+      business_end_date = #{record.businessEndDate,jdbcType=DATE},
+      business_range = #{record.businessRange,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      logo_image_path = #{record.logoImagePath,jdbcType=VARCHAR},
+      service_category = #{record.serviceCategory,jdbcType=VARCHAR},
+      is_support_measure = #{record.isSupportMeasure,jdbcType=BIT},
+      creator_id = #{record.creatorId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      updator = #{record.updator,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      check_state = #{record.checkState,jdbcType=INTEGER},
+      is_del = #{record.isDel,jdbcType=BIT},
+      summary = #{record.summary,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update service_provider
+    set ID = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=CHAR},
+      shortname = #{record.shortname,jdbcType=VARCHAR},
+      company_name = #{record.companyName,jdbcType=VARCHAR},
+      legal_person = #{record.legalPerson,jdbcType=VARCHAR},
+      registered_addr = #{record.registeredAddr,jdbcType=VARCHAR},
+      registered_capital = #{record.registeredCapital,jdbcType=DECIMAL},
+      business_licence_no = #{record.businessLicenceNo,jdbcType=VARCHAR},
+      tax_registration_no = #{record.taxRegistrationNo,jdbcType=VARCHAR},
+      org_code = #{record.orgCode,jdbcType=VARCHAR},
+      business_start_date = #{record.businessStartDate,jdbcType=DATE},
+      business_end_date = #{record.businessEndDate,jdbcType=DATE},
+      business_range = #{record.businessRange,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      logo_image_path = #{record.logoImagePath,jdbcType=VARCHAR},
+      service_category = #{record.serviceCategory,jdbcType=VARCHAR},
+      is_support_measure = #{record.isSupportMeasure,jdbcType=BIT},
+      creator_id = #{record.creatorId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      updator = #{record.updator,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      check_state = #{record.checkState,jdbcType=INTEGER},
+      is_del = #{record.isDel,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.sp.domain.ServiceProvider" >
+    update service_provider
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=CHAR},
+      </if>
+      <if test="shortname != null" >
+        shortname = #{shortname,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredAddr != null" >
+        registered_addr = #{registeredAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="registeredCapital != null" >
+        registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+      </if>
+      <if test="businessLicenceNo != null" >
+        business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRegistrationNo != null" >
+        tax_registration_no = #{taxRegistrationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStartDate != null" >
+        business_start_date = #{businessStartDate,jdbcType=DATE},
+      </if>
+      <if test="businessEndDate != null" >
+        business_end_date = #{businessEndDate,jdbcType=DATE},
+      </if>
+      <if test="businessRange != null" >
+        business_range = #{businessRange,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="logoImagePath != null" >
+        logo_image_path = #{logoImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCategory != null" >
+        service_category = #{serviceCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="isSupportMeasure != null" >
+        is_support_measure = #{isSupportMeasure,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updator != null" >
+        updator = #{updator,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkState != null" >
+        check_state = #{checkState,jdbcType=INTEGER},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.efubao.core.sp.domain.ServiceProvider" >
+    update service_provider
+    set name = #{name,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=CHAR},
+      shortname = #{shortname,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      registered_addr = #{registeredAddr,jdbcType=VARCHAR},
+      registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+      business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      tax_registration_no = #{taxRegistrationNo,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      business_start_date = #{businessStartDate,jdbcType=DATE},
+      business_end_date = #{businessEndDate,jdbcType=DATE},
+      business_range = #{businessRange,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      logo_image_path = #{logoImagePath,jdbcType=VARCHAR},
+      service_category = #{serviceCategory,jdbcType=VARCHAR},
+      is_support_measure = #{isSupportMeasure,jdbcType=BIT},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      check_state = #{checkState,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=BIT},
+      summary = #{summary,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.sp.domain.ServiceProvider" >
+    update service_provider
+    set name = #{name,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=CHAR},
+      shortname = #{shortname,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      registered_addr = #{registeredAddr,jdbcType=VARCHAR},
+      registered_capital = #{registeredCapital,jdbcType=DECIMAL},
+      business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      tax_registration_no = #{taxRegistrationNo,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      business_start_date = #{businessStartDate,jdbcType=DATE},
+      business_end_date = #{businessEndDate,jdbcType=DATE},
+      business_range = #{businessRange,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      logo_image_path = #{logoImagePath,jdbcType=VARCHAR},
+      service_category = #{serviceCategory,jdbcType=VARCHAR},
+      is_support_measure = #{isSupportMeasure,jdbcType=BIT},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updator = #{updator,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      check_state = #{checkState,jdbcType=INTEGER},
+      is_del = #{isDel,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <!-- <select id="getServiceP" parameterType="java.util.Map" resultMap="BaseResultMap">
+  SELECT 
+    *
+FROM
+    service_provider
+WHERE
+   <if test="_parameter.containsKey('spName') != null">
+    name LIKE '%#{spName,jdbcType=VARCHAR}%'
+    <if test="_parameter.containsKey('categoryId') != 0">
+     AND
+    </if>
+   </if>
+   <if test="_parameter.containsKey('categoryId') != 0">
+    id IN (SELECT 
+            sp_id
+        FROM
+            sp_contract
+        WHERE
+            id IN (SELECT 
+                    sp_contract_id
+                FROM
+                    sp_category_relation
+                WHERE
+                    category_id = #{categoryId,jdbcType=INTEGER}));
+  
+   </if>
+   <if test="start >= 0">
+   limit #{start,jdbcType=INTEGER},#{end,jdbcType=INTEGER}
+   </if>
+        
+  </select>
+  
+    <select id="countServiceP"  parameterType="java.util.Map">
+  SELECT 
+    count(*)
+FROM
+    service_provider
+WHERE
+   <if test="_parameter.containsKey('spName') != null">
+    name LIKE '%#{spName,jdbcType=VARCHAR}%'
+    <if test="_parameter.containsKey('categoryId') !=0">
+     AND
+    </if>
+   </if>
+   <if test="_parameter.containsKey('categoryId') != 0">
+    id IN (SELECT 
+            sp_id
+        FROM
+            sp_contract
+        WHERE
+            id IN (SELECT 
+                    sp_contract_id
+                FROM
+                    sp_category_relation
+                WHERE
+                    category_id = #{categoryId,jdbcType=INTEGER}));
+  
+   </if>
+  </select> -->
+  
+  <select id="getServiceP" resultMap="BaseResultMap">
+  SELECT 
+    *
+FROM
+    service_provider
+WHERE
+   <if test="param1 != null">
+    name LIKE #{param1,jdbcType=VARCHAR}
+    <if test="param2 != 0">
+     AND
+    </if>
+   </if>
+   <if test="param2 != 0">
+    id IN (SELECT 
+            sp_id
+        FROM
+            sp_contract
+        WHERE
+            id IN (SELECT 
+                    sp_contract_id
+                FROM
+                    sp_category_relation
+                WHERE
+                    category_id = #{param2,jdbcType=INTEGER}))
+  
+   </if>
+   <if test="param3 >= 0">
+   limit #{param3,jdbcType=INTEGER},#{param4,jdbcType=INTEGER}
+   </if>
+  </select>
+  
+    <select id="countServiceP" resultType="java.lang.Integer" >
+  SELECT 
+    count(*)
+FROM
+    service_provider
+WHERE
+   <if test="param1 != null">
+    name LIKE #{param1,jdbcType=VARCHAR}
+    <if test="param2 != 0">
+     AND
+    </if>
+   </if>
+   <if test="param2 != 0">
+    id IN (SELECT 
+            sp_id
+        FROM
+            sp_contract
+        WHERE
+            id IN (SELECT 
+                    sp_contract_id
+                FROM
+                    sp_category_relation
+                WHERE
+                    category_id = #{param2,jdbcType=INTEGER}))
+  
+   </if>
+  </select>
+</mapper>

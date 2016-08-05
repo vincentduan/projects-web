@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bean="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	default-lazy-init="true">
+	
+	<bean id="liquibase_DataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+		<property name="driverClassName" value="org.postgresql.Driver" />
+		<property name="url"
+			value="jdbc:postgresql://${db.crm_cms.ip}:${db.crm_cms.port}/crm_cms" />
+		<property name="username" value="${db.liquibase.username}" />
+		<property name="password" value="${db.liquibase.password}" />
+	</bean>
+	<!-- liquibase db migration -->
+	<bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase"
+		lazy-init="false">
+		<property name="dataSource" ref="liquibase_DataSource" />
+		<property name="changeLog" value="classpath:db/liquibase/changelog.xml" />
+	</bean>
+
+</beans>

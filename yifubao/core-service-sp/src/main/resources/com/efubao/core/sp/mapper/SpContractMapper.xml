@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.sp.mapper.SpContractMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.sp.domain.SpContract" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_num" property="contractNum" jdbcType="VARCHAR" />
+    <result column="valid_start_date" property="validStartDate" jdbcType="DATE" />
+    <result column="valid_end_date" property="validEndDate" jdbcType="DATE" />
+    <result column="invoice_type" property="invoiceType" jdbcType="VARCHAR" />
+    <result column="commission_percent" property="commissionPercent" jdbcType="DECIMAL" />
+    <result column="prepayment_percent" property="prepaymentPercent" jdbcType="DECIMAL" />
+    <result column="credit_deposit_percent" property="creditDepositPercent" jdbcType="DECIMAL" />
+    <result column="quality_deposit_percent" property="qualityDepositPercent" jdbcType="DECIMAL" />
+    <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+    <result column="sp_id" property="spId" jdbcType="BIGINT" />
+    <result column="balance_type" property="balanceType" jdbcType="INTEGER" />
+    <result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, contract_name, contract_num, valid_start_date, valid_end_date, invoice_type, 
+    commission_percent, prepayment_percent, credit_deposit_percent, quality_deposit_percent, 
+    service_fee, sp_id, balance_type, check_status, status, create_time, update_time, 
+    is_del
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.sp.domain.SpContractExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sp_contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sp_contract
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sp_contract
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.sp.domain.SpContractExample" >
+    delete from sp_contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.sp.domain.SpContract" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sp_contract (contract_name, contract_num, valid_start_date, 
+      valid_end_date, invoice_type, commission_percent, 
+      prepayment_percent, credit_deposit_percent, 
+      quality_deposit_percent, service_fee, sp_id, 
+      balance_type, check_status, status, 
+      create_time, update_time, is_del
+      )
+    values (#{contractName,jdbcType=VARCHAR}, #{contractNum,jdbcType=VARCHAR}, #{validStartDate,jdbcType=DATE}, 
+      #{validEndDate,jdbcType=DATE}, #{invoiceType,jdbcType=VARCHAR}, #{commissionPercent,jdbcType=DECIMAL}, 
+      #{prepaymentPercent,jdbcType=DECIMAL}, #{creditDepositPercent,jdbcType=DECIMAL}, 
+      #{qualityDepositPercent,jdbcType=DECIMAL}, #{serviceFee,jdbcType=DECIMAL}, #{spId,jdbcType=BIGINT}, 
+      #{balanceType,jdbcType=INTEGER}, #{checkStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.sp.domain.SpContract" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sp_contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contractName != null" >
+        contract_name,
+      </if>
+      <if test="contractNum != null" >
+        contract_num,
+      </if>
+      <if test="validStartDate != null" >
+        valid_start_date,
+      </if>
+      <if test="validEndDate != null" >
+        valid_end_date,
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type,
+      </if>
+      <if test="commissionPercent != null" >
+        commission_percent,
+      </if>
+      <if test="prepaymentPercent != null" >
+        prepayment_percent,
+      </if>
+      <if test="creditDepositPercent != null" >
+        credit_deposit_percent,
+      </if>
+      <if test="qualityDepositPercent != null" >
+        quality_deposit_percent,
+      </if>
+      <if test="serviceFee != null" >
+        service_fee,
+      </if>
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="balanceType != null" >
+        balance_type,
+      </if>
+      <if test="checkStatus != null" >
+        check_status,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contractName != null" >
+        #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNum != null" >
+        #{contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="validStartDate != null" >
+        #{validStartDate,jdbcType=DATE},
+      </if>
+      <if test="validEndDate != null" >
+        #{validEndDate,jdbcType=DATE},
+      </if>
+      <if test="invoiceType != null" >
+        #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="commissionPercent != null" >
+        #{commissionPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="prepaymentPercent != null" >
+        #{prepaymentPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="creditDepositPercent != null" >
+        #{creditDepositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="qualityDepositPercent != null" >
+        #{qualityDepositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null" >
+        #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="spId != null" >
+        #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="balanceType != null" >
+        #{balanceType,jdbcType=INTEGER},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.sp.domain.SpContractExample" resultType="java.lang.Integer" >
+    select count(*) from sp_contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sp_contract
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.contractName != null" >
+        contract_name = #{record.contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractNum != null" >
+        contract_num = #{record.contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validStartDate != null" >
+        valid_start_date = #{record.validStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.validEndDate != null" >
+        valid_end_date = #{record.validEndDate,jdbcType=DATE},
+      </if>
+      <if test="record.invoiceType != null" >
+        invoice_type = #{record.invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commissionPercent != null" >
+        commission_percent = #{record.commissionPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.prepaymentPercent != null" >
+        prepayment_percent = #{record.prepaymentPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.creditDepositPercent != null" >
+        credit_deposit_percent = #{record.creditDepositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qualityDepositPercent != null" >
+        quality_deposit_percent = #{record.qualityDepositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceFee != null" >
+        service_fee = #{record.serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.spId != null" >
+        sp_id = #{record.spId,jdbcType=BIGINT},
+      </if>
+      <if test="record.balanceType != null" >
+        balance_type = #{record.balanceType,jdbcType=INTEGER},
+      </if>
+      <if test="record.checkStatus != null" >
+        check_status = #{record.checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sp_contract
+    set ID = #{record.id,jdbcType=BIGINT},
+      contract_name = #{record.contractName,jdbcType=VARCHAR},
+      contract_num = #{record.contractNum,jdbcType=VARCHAR},
+      valid_start_date = #{record.validStartDate,jdbcType=DATE},
+      valid_end_date = #{record.validEndDate,jdbcType=DATE},
+      invoice_type = #{record.invoiceType,jdbcType=VARCHAR},
+      commission_percent = #{record.commissionPercent,jdbcType=DECIMAL},
+      prepayment_percent = #{record.prepaymentPercent,jdbcType=DECIMAL},
+      credit_deposit_percent = #{record.creditDepositPercent,jdbcType=DECIMAL},
+      quality_deposit_percent = #{record.qualityDepositPercent,jdbcType=DECIMAL},
+      service_fee = #{record.serviceFee,jdbcType=DECIMAL},
+      sp_id = #{record.spId,jdbcType=BIGINT},
+      balance_type = #{record.balanceType,jdbcType=INTEGER},
+      check_status = #{record.checkStatus,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.sp.domain.SpContract" >
+    update sp_contract
+    <set >
+      <if test="contractName != null" >
+        contract_name = #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNum != null" >
+        contract_num = #{contractNum,jdbcType=VARCHAR},
+      </if>
+      <if test="validStartDate != null" >
+        valid_start_date = #{validStartDate,jdbcType=DATE},
+      </if>
+      <if test="validEndDate != null" >
+        valid_end_date = #{validEndDate,jdbcType=DATE},
+      </if>
+      <if test="invoiceType != null" >
+        invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      </if>
+      <if test="commissionPercent != null" >
+        commission_percent = #{commissionPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="prepaymentPercent != null" >
+        prepayment_percent = #{prepaymentPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="creditDepositPercent != null" >
+        credit_deposit_percent = #{creditDepositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="qualityDepositPercent != null" >
+        quality_deposit_percent = #{qualityDepositPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceFee != null" >
+        service_fee = #{serviceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="spId != null" >
+        sp_id = #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="balanceType != null" >
+        balance_type = #{balanceType,jdbcType=INTEGER},
+      </if>
+      <if test="checkStatus != null" >
+        check_status = #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.sp.domain.SpContract" >
+    update sp_contract
+    set contract_name = #{contractName,jdbcType=VARCHAR},
+      contract_num = #{contractNum,jdbcType=VARCHAR},
+      valid_start_date = #{validStartDate,jdbcType=DATE},
+      valid_end_date = #{validEndDate,jdbcType=DATE},
+      invoice_type = #{invoiceType,jdbcType=VARCHAR},
+      commission_percent = #{commissionPercent,jdbcType=DECIMAL},
+      prepayment_percent = #{prepaymentPercent,jdbcType=DECIMAL},
+      credit_deposit_percent = #{creditDepositPercent,jdbcType=DECIMAL},
+      quality_deposit_percent = #{qualityDepositPercent,jdbcType=DECIMAL},
+      service_fee = #{serviceFee,jdbcType=DECIMAL},
+      sp_id = #{spId,jdbcType=BIGINT},
+      balance_type = #{balanceType,jdbcType=INTEGER},
+      check_status = #{checkStatus,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

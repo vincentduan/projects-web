@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.sp.mapper.MeasureMasterMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.sp.domain.MeasureMaster" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="pwd" property="pwd" jdbcType="CHAR" />
+    <result column="specialty_evaluation" property="specialtyEvaluation" jdbcType="DECIMAL" />
+    <result column="measure_experience" property="measureExperience" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="avatar_image_path" property="avatarImagePath" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sp_id" property="spId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, name, mobile, pwd, specialty_evaluation, measure_experience, introduction, avatar_image_path, 
+    gender, status, sp_id, create_time, update_time, is_del
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.sp.domain.MeasureMasterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from measure_master
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from measure_master
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from measure_master
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.sp.domain.MeasureMasterExample" >
+    delete from measure_master
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.sp.domain.MeasureMaster" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into measure_master (name, mobile, pwd, 
+      specialty_evaluation, measure_experience, 
+      introduction, avatar_image_path, gender, 
+      status, sp_id, create_time, 
+      update_time, is_del)
+    values (#{name,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{pwd,jdbcType=CHAR}, 
+      #{specialtyEvaluation,jdbcType=DECIMAL}, #{measureExperience,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR}, #{avatarImagePath,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{spId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.sp.domain.MeasureMaster" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into measure_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="specialtyEvaluation != null" >
+        specialty_evaluation,
+      </if>
+      <if test="measureExperience != null" >
+        measure_experience,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="avatarImagePath != null" >
+        avatar_image_path,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="specialtyEvaluation != null" >
+        #{specialtyEvaluation,jdbcType=DECIMAL},
+      </if>
+      <if test="measureExperience != null" >
+        #{measureExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarImagePath != null" >
+        #{avatarImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="spId != null" >
+        #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.sp.domain.MeasureMasterExample" resultType="java.lang.Integer" >
+    select count(*) from measure_master
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update measure_master
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=CHAR},
+      </if>
+      <if test="record.pwd != null" >
+        pwd = #{record.pwd,jdbcType=CHAR},
+      </if>
+      <if test="record.specialtyEvaluation != null" >
+        specialty_evaluation = #{record.specialtyEvaluation,jdbcType=DECIMAL},
+      </if>
+      <if test="record.measureExperience != null" >
+        measure_experience = #{record.measureExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduction != null" >
+        introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarImagePath != null" >
+        avatar_image_path = #{record.avatarImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.spId != null" >
+        sp_id = #{record.spId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update measure_master
+    set ID = #{record.id,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=CHAR},
+      pwd = #{record.pwd,jdbcType=CHAR},
+      specialty_evaluation = #{record.specialtyEvaluation,jdbcType=DECIMAL},
+      measure_experience = #{record.measureExperience,jdbcType=VARCHAR},
+      introduction = #{record.introduction,jdbcType=VARCHAR},
+      avatar_image_path = #{record.avatarImagePath,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      sp_id = #{record.spId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.sp.domain.MeasureMaster" >
+    update measure_master
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="specialtyEvaluation != null" >
+        specialty_evaluation = #{specialtyEvaluation,jdbcType=DECIMAL},
+      </if>
+      <if test="measureExperience != null" >
+        measure_experience = #{measureExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarImagePath != null" >
+        avatar_image_path = #{avatarImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="spId != null" >
+        sp_id = #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.sp.domain.MeasureMaster" >
+    update measure_master
+    set name = #{name,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=CHAR},
+      pwd = #{pwd,jdbcType=CHAR},
+      specialty_evaluation = #{specialtyEvaluation,jdbcType=DECIMAL},
+      measure_experience = #{measureExperience,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      avatar_image_path = #{avatarImagePath,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      sp_id = #{spId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

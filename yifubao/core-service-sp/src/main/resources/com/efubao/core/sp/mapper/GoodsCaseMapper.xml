@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.efubao.core.sp.mapper.GoodsCaseMapper" >
+  <resultMap id="BaseResultMap" type="com.efubao.core.sp.domain.GoodsCase" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="case_name" property="caseName" jdbcType="VARCHAR" />
+    <result column="plan" property="plan" jdbcType="VARCHAR" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
+    <result column="industry_id" property="industryId" jdbcType="BIGINT" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="sp_id" property="spId" jdbcType="BIGINT" />
+    <result column="customer_evaluation" property="customerEvaluation" jdbcType="VARCHAR" />
+    <result column="custom_num" property="customNum" jdbcType="INTEGER" />
+    <result column="custom_cycle" property="customCycle" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_del" property="isDel" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.efubao.core.sp.domain.GoodsCase" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, case_name, plan, cost, customer_name, industry_id, category_id, sp_id, customer_evaluation, 
+    custom_num, custom_cycle, create_time, update_time, is_del
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.efubao.core.sp.domain.GoodsCaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.efubao.core.sp.domain.GoodsCaseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+       limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from goods_case
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_case
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.efubao.core.sp.domain.GoodsCaseExample" >
+    delete from goods_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.efubao.core.sp.domain.GoodsCase" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods_case (case_name, plan, cost, 
+      customer_name, industry_id, category_id, 
+      sp_id, customer_evaluation, custom_num, 
+      custom_cycle, create_time, update_time, 
+      is_del, description)
+    values (#{caseName,jdbcType=VARCHAR}, #{plan,jdbcType=VARCHAR}, #{cost,jdbcType=DECIMAL}, 
+      #{customerName,jdbcType=VARCHAR}, #{industryId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, 
+      #{spId,jdbcType=BIGINT}, #{customerEvaluation,jdbcType=VARCHAR}, #{customNum,jdbcType=INTEGER}, 
+      #{customCycle,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isDel,jdbcType=BIT}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.efubao.core.sp.domain.GoodsCase" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods_case
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="caseName != null" >
+        case_name,
+      </if>
+      <if test="plan != null" >
+        plan,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="customerName != null" >
+        customer_name,
+      </if>
+      <if test="industryId != null" >
+        industry_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="spId != null" >
+        sp_id,
+      </if>
+      <if test="customerEvaluation != null" >
+        customer_evaluation,
+      </if>
+      <if test="customNum != null" >
+        custom_num,
+      </if>
+      <if test="customCycle != null" >
+        custom_cycle,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="caseName != null" >
+        #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="plan != null" >
+        #{plan,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="industryId != null" >
+        #{industryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="spId != null" >
+        #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="customerEvaluation != null" >
+        #{customerEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="customNum != null" >
+        #{customNum,jdbcType=INTEGER},
+      </if>
+      <if test="customCycle != null" >
+        #{customCycle,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.efubao.core.sp.domain.GoodsCaseExample" resultType="java.lang.Integer" >
+    select count(*) from goods_case
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update goods_case
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.caseName != null" >
+        case_name = #{record.caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plan != null" >
+        plan = #{record.plan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cost != null" >
+        cost = #{record.cost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerName != null" >
+        customer_name = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.industryId != null" >
+        industry_id = #{record.industryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.spId != null" >
+        sp_id = #{record.spId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerEvaluation != null" >
+        customer_evaluation = #{record.customerEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customNum != null" >
+        custom_num = #{record.customNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.customCycle != null" >
+        custom_cycle = #{record.customCycle,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDel != null" >
+        is_del = #{record.isDel,jdbcType=BIT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update goods_case
+    set ID = #{record.id,jdbcType=BIGINT},
+      case_name = #{record.caseName,jdbcType=VARCHAR},
+      plan = #{record.plan,jdbcType=VARCHAR},
+      cost = #{record.cost,jdbcType=DECIMAL},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      industry_id = #{record.industryId,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      sp_id = #{record.spId,jdbcType=BIGINT},
+      customer_evaluation = #{record.customerEvaluation,jdbcType=VARCHAR},
+      custom_num = #{record.customNum,jdbcType=INTEGER},
+      custom_cycle = #{record.customCycle,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT},
+      description = #{record.description,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update goods_case
+    set ID = #{record.id,jdbcType=BIGINT},
+      case_name = #{record.caseName,jdbcType=VARCHAR},
+      plan = #{record.plan,jdbcType=VARCHAR},
+      cost = #{record.cost,jdbcType=DECIMAL},
+      customer_name = #{record.customerName,jdbcType=VARCHAR},
+      industry_id = #{record.industryId,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      sp_id = #{record.spId,jdbcType=BIGINT},
+      customer_evaluation = #{record.customerEvaluation,jdbcType=VARCHAR},
+      custom_num = #{record.customNum,jdbcType=INTEGER},
+      custom_cycle = #{record.customCycle,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_del = #{record.isDel,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.efubao.core.sp.domain.GoodsCase" >
+    update goods_case
+    <set >
+      <if test="caseName != null" >
+        case_name = #{caseName,jdbcType=VARCHAR},
+      </if>
+      <if test="plan != null" >
+        plan = #{plan,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="customerName != null" >
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="industryId != null" >
+        industry_id = #{industryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="spId != null" >
+        sp_id = #{spId,jdbcType=BIGINT},
+      </if>
+      <if test="customerEvaluation != null" >
+        customer_evaluation = #{customerEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="customNum != null" >
+        custom_num = #{customNum,jdbcType=INTEGER},
+      </if>
+      <if test="customCycle != null" >
+        custom_cycle = #{customCycle,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.efubao.core.sp.domain.GoodsCase" >
+    update goods_case
+    set case_name = #{caseName,jdbcType=VARCHAR},
+      plan = #{plan,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DECIMAL},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      industry_id = #{industryId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      sp_id = #{spId,jdbcType=BIGINT},
+      customer_evaluation = #{customerEvaluation,jdbcType=VARCHAR},
+      custom_num = #{customNum,jdbcType=INTEGER},
+      custom_cycle = #{customCycle,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.efubao.core.sp.domain.GoodsCase" >
+    update goods_case
+    set case_name = #{caseName,jdbcType=VARCHAR},
+      plan = #{plan,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DECIMAL},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      industry_id = #{industryId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      sp_id = #{spId,jdbcType=BIGINT},
+      customer_evaluation = #{customerEvaluation,jdbcType=VARCHAR},
+      custom_num = #{customNum,jdbcType=INTEGER},
+      custom_cycle = #{customCycle,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=BIT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

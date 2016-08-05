@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bean="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.1.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+     http://www.springframework.org/schema/jdbc  
+     http://www.springframework.org/schema/jdbc/spring-jdbc-4.1.xsd 
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+	<!-- base common pool setting -->
+	<import resource="classpath:com/efubao/core/common/datasource/ds-base.xml"/>
+	
+	<!-- master datasource -->
+	<bean id="sp_DataSource" parent="base_pool">
+		<property name="url"
+			value="jdbc:mysql://${db.sp.ip}:${db.sp.port}/${db.sp.db.name}?characterEncoding=utf8" />
+		<property name="username" value="${db.sp.username}" />
+		<property name="password" value="${db.sp.password}" />
+	</bean>
+
+	<!-- slave datasource -->
+	<!-- <bean id="admin_slave_DataSource" parent="base_pool">
+		<property name="url"
+			value="jdbc:mysql://${db.admin.ip}:${db.admin.slave.port}/${db.admin.slave.db.name}?characterEncoding=utf8" />
+		<property name="username" value="${db.admin.slave.username}" />
+		<property name="password" value="${db.admin.slave.password}" />
+	</bean>
+	
+	<bean id="admin_dynamic_DataSource" class="com.efubao.t.datasource.dynamic.DynamicDataSource">
+		<property name="targetDataSources">
+			<map>
+				<entry key="master" value-ref="admin_DataSource" />
+				<entry key="slave" value-ref="admin_slave_DataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="admin_DataSource" />
+	</bean> -->
+	<!-- tx -->
+	<tx:annotation-driven transaction-manager="sp_Txm" />
+	<bean id="sp_Txm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="sp_DataSource" />
+	</bean>
+</beans>

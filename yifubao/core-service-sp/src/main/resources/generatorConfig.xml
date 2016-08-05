@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="C:/Users/zzy/.m2/repository/mysql/mysql-connector-java/5.1.24/mysql-connector-java-5.1.24.jar" />
+	<context id="efubao_Tables" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="utf-8" />
+		
+		<!-- pagination plugin -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugin.PaginationMysqlPlugin" />
+		<plugin type="org.mybatis.generator.plugin.CommentPlugin" >
+			<property name="modelClassAuthor" value="zhangzhiyong" />
+		</plugin>
+
+		<commentGenerator>
+			<!-- 不生成注解信息 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://10.1.7.18:3306/efubao_sp"
+			userId="root"
+			password="123456" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- generate Model -->
+		<javaModelGenerator targetPackage="com.efubao.core.sp.domain" targetProject="core-service-sp/src/main/java" />
+
+		<!-- generate xml -->
+		<sqlMapGenerator targetPackage="com.efubao.core.sp.mapper" targetProject="core-service-sp/src/main/resources" />
+
+		<!-- generate Mapper -->
+		<javaClientGenerator targetPackage="com.efubao.core.sp.mapper" targetProject="core-service-sp/src/main/java" type="XMLMAPPER" />
+		
+		<table tableName="goods_case" domainObjectName="GoodsCase">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<!-- <table tableName="industry" domainObjectName="Industry">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="measure_master" domainObjectName="MeasureMaster">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="service_provider" domainObjectName="ServiceProvider">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="sp_case" domainObjectName="SpCase">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="sp_category_relation" domainObjectName="SpCategoryRelation">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="sp_certificate_picture" domainObjectName="SpCertificatePicture">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="sp_contract" domainObjectName="SpContract">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table>
+		
+		<table tableName="sp_service_range" domainObjectName="SpServiceRange">
+			<generatedKey column="id" sqlStatement="MySQL" identity="true" />
+			<columnOverride column="create_time" javaType="java.sql.Timestamp"/>
+			<columnOverride column="update_time" javaType="java.sql.Timestamp"/>
+		</table> -->
+	</context>
+
+</generatorConfiguration>
